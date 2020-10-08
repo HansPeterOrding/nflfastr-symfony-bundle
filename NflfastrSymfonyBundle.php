@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace HansPeterOrding\NflfastrSymfonyBundle;
+namespace HansPeterOrding\NflFastrSymfonyBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class NflfastrSymfonyBundle extends Bundle
+class NflFastrSymfonyBundle extends Bundle
 {
 
 }
