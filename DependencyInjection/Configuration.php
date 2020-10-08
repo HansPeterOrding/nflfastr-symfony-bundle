@@ -11,7 +11,7 @@ final class Configuration implements ConfigurationInterface
 {
 	public function getConfigTreeBuilder()
 	{
-		$treeBuilder = new TreeBuilder('nflfastr_symfony');
+		$treeBuilder = new TreeBuilder('nfl_fastr_symfony');
 		$rootNode = $treeBuilder->getRootNode();
 
 		$rootNode
