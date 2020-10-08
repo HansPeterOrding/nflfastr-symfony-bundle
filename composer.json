@@ -1,6 +1,5 @@
 {
   "name": "hans-peter-ording/nflfastr-symfony-bundle",
-  "version": "0.1.0",
   "type": "symfony-bundle",
   "description": "Symfony bundle to import data from nflfastR-data to symfony",
   "license": "MIT",
