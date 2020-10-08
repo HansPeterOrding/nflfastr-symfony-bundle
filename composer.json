@@ -9,7 +9,7 @@
   },
   "autoload": {
     "psr-4": {
-      "HansPeterOrding\\NflFastRSymfonyBundle\\": ""
+      "HansPeterOrding\\NflFastrSymfonyBundle\\": ""
     },
     "exclude-from-classmap": [
       "/Tests/"
