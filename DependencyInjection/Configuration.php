@@ -16,6 +16,7 @@ final class Configuration implements ConfigurationInterface
 
 		$rootNode
 			->children()
+				->scalarNode('timetone')->defaultValue('Europe/Berlin')->end()
 				->arrayNode('sources')
 					->children()
 						->arrayNode('playByPlay')
