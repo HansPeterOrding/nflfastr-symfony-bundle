@@ -1,6 +1,6 @@
 {
-  "name": "HansPeterOrding/nflfastR-symfony-bundle",
-  "version": "0.0.1",
+  "name": "HansPeterOrding/nflfastr-symfony-bundle",
+  "version": "0.1.0",
   "type": "symfony-bundle",
   "description": "Symfony bundle to import data from nflfastR-data to symfony",
   "license": "MIT",
@@ -9,7 +9,7 @@
   },
   "autoload": {
     "psr-4": {
-      "HansPeterOrding\\NflFastRBridge\\": ""
+      "HansPeterOrding\\NflFastRSymfonyBundle\\": ""
     },
     "exclude-from-classmap": [
       "/Tests/"
