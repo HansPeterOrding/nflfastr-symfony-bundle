@@ -4,7 +4,11 @@
   "description": "Symfony bundle to import data from nflfastR-data to symfony",
   "license": "MIT",
   "require": {
-    "php": "^7.4.0"
+    "php": "^7.4.0",
+    "symfony/console": "^5.2@dev",
+    "symfony/dependency-injection": "5.x-dev",
+    "symfony/config": "5.x-dev",
+    "symfony/http-kernel": "5.x-dev"
   },
   "autoload": {
     "psr-4": {
