@@ -27,10 +27,7 @@ class NflFastrSymfonyExtension extends Extension
 
 		$definition = $container->getDefinition('nfl_fastr_symfony.import_roster_command');
 
-		dump($definition->getArguments());
 		$definition->setArgument(0, $this->config['sources']);
-
-		dump($definition);
 
 		$container->setParameter('nfl_fastr_symfony.sources', $this->config['sources']);
 	}

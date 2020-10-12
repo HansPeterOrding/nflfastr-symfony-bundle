@@ -15,8 +15,8 @@ abstract class AbstractImportNflFastrCommand extends Command
 		string $name = null
 	)
 	{
-		parent::__construct($name);
-
 		$this->sources = $sources;
+
+		parent::__construct($name);
 	}
 }

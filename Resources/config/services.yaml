@@ -11,3 +11,5 @@ services:
     autoconfigure: true
     tags:
       - { name: 'console.command' }
+    arguments:
+      $sources: []

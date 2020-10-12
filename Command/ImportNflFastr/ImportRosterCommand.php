@@ -20,8 +20,7 @@ class ImportRosterCommand extends AbstractImportNflFastrCommand
 
 	protected function configure()
 	{
-		dump($this->sources);
-		$this->setDescription('Import full rosters from ' . '');
+		$this->setDescription('Import full rosters from ' . $this->sources['roster']['baseUrl'] . ' at ' . $this->sources['roster']['path']);
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)
