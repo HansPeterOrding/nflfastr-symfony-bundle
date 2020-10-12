@@ -11,5 +11,3 @@ services:
     autoconfigure: true
     tags:
       - { name: 'console.command' }
-
-  : HansPeterOrding\NflFastrSymfonyBundle\Command\ImportNflFastr\ImportRosterCommand
