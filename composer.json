@@ -9,7 +9,7 @@
     "symfony/dependency-injection": "^5.1.0",
     "symfony/config": "^5.1.0",
     "symfony/http-kernel": "^5.1.0",
-    "symfony/orm-pack": "^5.1.0"
+    "symfony/orm-pack": "*"
   },
   "autoload": {
     "psr-4": {
