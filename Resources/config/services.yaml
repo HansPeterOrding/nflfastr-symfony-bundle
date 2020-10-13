@@ -3,13 +3,19 @@ services:
   _defaults:
     # this means you cannot fetch services directly from the container via $container->get()
     # if you need to do this, you can override this setting on individual services
+    autowire: true
+    autoconfigure: true
     public: false
+
+  nfl_fastr_symfony.import_service:
+    class: HansPeterOrding\NflFastrSymfonyBundle\Service\ImportService
+    public: true
+    arguments:
+      $sources: []
 
   nfl_fastr_symfony.import_roster_command:
     class: HansPeterOrding\NflFastrSymfonyBundle\Command\ImportNflFastr\ImportRosterCommand
-    autowire: true
-    autoconfigure: true
     tags:
       - { name: 'console.command' }
     arguments:
-      $sources: []
+      $importService: '@nfl_fastr_symfony.import_service'

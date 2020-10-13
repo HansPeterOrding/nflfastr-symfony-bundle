@@ -8,7 +8,8 @@
     "symfony/console": "^5.1.0",
     "symfony/dependency-injection": "^5.1.0",
     "symfony/config": "^5.1.0",
-    "symfony/http-kernel": "^5.1.0"
+    "symfony/http-kernel": "^5.1.0",
+    "symfony/orm-pack": "^5.1.0"
   },
   "autoload": {
     "psr-4": {
@@ -18,5 +19,8 @@
       "/Tests/"
     ]
   },
-  "minimum-stability": "dev"
+  "minimum-stability": "dev",
+  "require-dev": {
+    "symfony/maker-bundle": "^1.0@dev"
+  }
 }

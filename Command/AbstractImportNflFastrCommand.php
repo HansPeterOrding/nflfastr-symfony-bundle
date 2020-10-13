@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace HansPeterOrding\NflFastrSymfonyBundle\Command;
 
+use HansPeterOrding\NflFastrSymfonyBundle\Service\ImportService;
 use Symfony\Component\Console\Command\Command;
 
 abstract class AbstractImportNflFastrCommand extends Command
 {
-	protected ?iterable $sources = null;
+	protected ?ImportService $importService = null;
 
 	public function __construct(
-		array $sources,
+		ImportService $importService,
 		string $name = null
-	)
-	{
-		$this->sources = $sources;
+	) {
+		$this->importService = $importService;
 
 		parent::__construct($name);
 	}

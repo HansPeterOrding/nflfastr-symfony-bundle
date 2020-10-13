@@ -25,9 +25,8 @@ class NflFastrSymfonyExtension extends Extension
 		$loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 		$loader->load('services.yaml');
 
-		$definition = $container->getDefinition('nfl_fastr_symfony.import_roster_command');
-
-		$definition->setArgument(0, $this->config['sources']);
+		$definition = $container->getDefinition('nfl_fastr_symfony.import_service');
+		$definition->setArgument('$sources', $this->config['sources']);
 
 		$container->setParameter('nfl_fastr_symfony.sources', $this->config['sources']);
 	}
