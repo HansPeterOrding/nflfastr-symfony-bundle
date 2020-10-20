@@ -24,7 +24,7 @@ matrix:
       # Test LTS versions. This makes sure we do not use Symfony packages with version greater
       # than 2 or 3 respectively. Read more at https://github.com/symfony/lts
     - php: 7.4
-      env: DEPENDENCIES="symfony/lts:^3"
+      env: DEPENDENCIES="symfony/lts:^5"
 
       # Latest commit to master
     - php: 7.4
@@ -41,10 +41,8 @@ before_install:
 
 install:
   - COMPOSER_MEMORY_LIMIT=-1 composer update ${COMPOSER_FLAGS} --prefer-dist --no-interaction
-  - ./vendor/bin/simple-phpunit install
 
 script:
   - composer validate --strict --no-check-lock
   # simple-phpunit is the PHPUnit wrapper provided by the PHPUnit Bridge component and
   # it helps with testing legacy code and deprecations (composer require symfony/phpunit-bridge)
-  - ./vendor/bin/simple-phpunit $PHPUNIT_FLAGS
