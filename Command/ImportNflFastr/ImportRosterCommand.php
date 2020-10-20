@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HansPeterOrding\NflFastrSymfonyBundle\Command\ImportNflFastr;
 
+use DateTime;
 use HansPeterOrding\NflFastrSymfonyBundle\Command\AbstractImportNflFastrCommand;
 use HansPeterOrding\NflFastrSymfonyBundle\Service\ImportService;
 use Symfony\Component\Console\Command\Command;
@@ -14,13 +15,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ImportRosterCommand extends AbstractImportNflFastrCommand
 {
+	const START_YEAR_ROSTERS = 1999;
+
 	protected static $defaultName = 'nflfastr-symfony:import:roster';
 
 	public function __construct(
 		ImportService $importService,
 		string $name = null
-	)
-	{
+	) {
 		parent::__construct($importService, $name);
 	}
 
@@ -28,28 +30,35 @@ class ImportRosterCommand extends AbstractImportNflFastrCommand
 	{
 		$this->setDescription('Import full rosters');
 		$this->addArgument(
-			'years',
+			'seasons',
 			InputArgument::IS_ARRAY,
-			'Specific years to be imported (separate multiple names with a space). If none are given, all available years are imported.'
+			'Specific seasons to be imported (separate multiple seasons with a space). If none are given, all available seasons are imported.'
 		);
 		$this->addOption(
-			'replace',
+			'interactive',
 			null,
 			InputOption::VALUE_NONE,
-			'This option replaces all rosters of all given years. Otherwise rosters are extended but not overwritten.'
+			'If this option is set, you will be asked for inputs (e.g. team names). If not, default values will be used.'
 		);
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		$years = $input->getArgument('years');
-		$replace = $input->getOption('replace');
+		$this->importService->setOutput($output);
+		$this->importService->setInput($input);
 
-		foreach($years as $year) {
-			if($replace) {
-				$this->importService->truncateRosterYear((int)$year);
+		$seasons = $input->getArgument('seasons');
+		if (!$seasons) {
+			for ($i = static::START_YEAR_ROSTERS; $i <= (new DateTime())->format('Y'); $i++) {
+				$seasons[] = $i;
 			}
-			$this->importService->importRosterYear((int)$year);
+		}
+		$interactive = $input->getOption('interactive');
+
+		$output->writeln(sprintf('<bg=red;fg=white;options=bold>Starting import for %s seasons.</>', count($seasons)));
+
+		foreach ($seasons as $season) {
+			$this->importService->importRosterSeason((int)$season, $interactive);
 		}
 
 		return Command::SUCCESS;

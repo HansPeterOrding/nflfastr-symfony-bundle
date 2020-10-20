@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace HansPeterOrding\NflFastrSymfonyBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
-class Team
+/**
+ * @ORM\Entity()
+ */
+class Team implements TeamInterface
 {
 	/**
 	 * @ORM\Id()
@@ -24,6 +28,21 @@ class Team
 	 * @ORM\Column(type="string", length=255, nullable=true)
 	 */
 	protected ?string $name = null;
+
+	/**
+	 * @ORM\Column(type="string", length=30)
+	 */
+	protected ?string $status = null;
+
+	/**
+	 * @ORM\OneToMany(targetEntity="HansPeterOrding\NflFastrSymfonyBundle\Entity\RosterAssignment", mappedBy="team")
+	 */
+	protected iterable $rosterAssignments;
+
+	public function __construct()
+	{
+		$this->rosterAssignments = new ArrayCollection();
+	}
 
 	public function getId(): ?int
 	{
@@ -57,6 +76,47 @@ class Team
 	public function setName(?string $name): self
 	{
 		$this->name = $name;
+
+		return $this;
+	}
+
+	public function getStatus(): ?string
+	{
+		return $this->status;
+	}
+
+	public function setStatus(?string $status): self
+	{
+		$this->status = $status;
+
+		return $this;
+	}
+
+	public function getRosterAssignments()
+	{
+		return $this->rosterAssignments;
+	}
+
+	/**
+	 * @param RosterAssignment[] $rosterAssignments
+	 */
+	public function setRosterAssignments(iterable $rosterAssignments): self
+	{
+		$this->rosterAssignments = $rosterAssignments;
+
+		return $this;
+	}
+
+	public function addRosterAssignment(RosterAssignment $rosterAssignment): self
+	{
+		$this->rosterAssignments[] = $rosterAssignment;
+
+		return $this;
+	}
+
+	public function removeRosterAssignment(RosterAssignment $rosterAssignment): self
+	{
+		$this->rosterAssignments->remove($rosterAssignment->getId());
 
 		return $this;
 	}
