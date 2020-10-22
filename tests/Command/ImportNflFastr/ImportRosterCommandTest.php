@@ -25,5 +25,7 @@ class ImportRosterCommandTest extends TestCase
 
 		$tester = new CommandTester($command);
 		$tester->execute([]);
+
+		$this->assertStringContainsString('Starting import for 22 seasons.', $tester->getDisplay());
 	}
 }
