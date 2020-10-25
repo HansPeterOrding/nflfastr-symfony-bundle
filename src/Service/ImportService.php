@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace HansPeterOrding\NflFastrSymfonyBundle\Service;
 
 use DateTime;
-use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\PlayerConverterInterface;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Player;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\PlayerInterface;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\RosterAssignment;
@@ -16,8 +16,6 @@ use HansPeterOrding\NflFastrSymfonyBundle\Entity\TeamInterface;
 use HansPeterOrding\NflFastrSymfonyBundle\Repository\PlayerRepository;
 use HansPeterOrding\NflFastrSymfonyBundle\Repository\RosterAssignmentRepository;
 use HansPeterOrding\NflFastrSymfonyBundle\Repository\TeamRepository;
-use Iterator;
-use League\Csv\Reader;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
@@ -26,25 +24,9 @@ use Symfony\Component\Console\Question\Question;
 
 class ImportService
 {
-	public const NOT_AVAILABLE = 'NA';
+	private ResourceHandlerService $resourceHandlerService;
 
-	private const DEFAULT_DELIMITER = ',';
-	private const DEFAULT_ENCLOSURE = '"';
-
-	private const ROSTER_FILE_PREFIX = 'roster_';
-	private const ROSTER_FILE_SUFFIX = '';
-
-	private static array $birthDateSourceFormats = [
-		'Y-m-d',
-		'm/d/Y'
-	];
-
-	private static array $heightParsingPatterns = [
-		'#^(?<feet>\d+)\'(?<inches>\d+)"$#',
-		'#^(?<feet>\d+)-(?<inches>\d+)$#'
-	];
-
-	private iterable $sources;
+	private PlayerConverterInterface $playerConverter;
 
 	private TeamRepository $teamRepository;
 
@@ -63,17 +45,21 @@ class ImportService
 	private ?ProgressBar $progressBar = null;
 
 	public function __construct(
-		array $sources,
+		ResourceHandlerService $resourceHandlerService,
+		EntityManagerInterface $entityManager,
+		PlayerConverterInterface $playerConverter,
+
 		TeamRepository $teamRepository,
-		PlayerRepository $playerRepository,
-		RosterAssignmentRepository $rosterAssignmentRepository,
-		EntityManagerInterface $entityManager
+		RosterAssignmentRepository $rosterAssignmentRepository
+
 	) {
-		$this->sources = $sources;
-		$this->teamRepository = $teamRepository;
-		$this->playerRepository = $playerRepository;
-		$this->rosterAssignmentRepository = $rosterAssignmentRepository;
+		$this->resourceHandlerService = $resourceHandlerService;
 		$this->entityManager = $entityManager;
+		$this->playerConverter = $playerConverter;
+
+
+		$this->teamRepository = $teamRepository;
+		$this->rosterAssignmentRepository = $rosterAssignmentRepository;
 	}
 
 	public function setOutput(OutputInterface $output): self
@@ -94,9 +80,8 @@ class ImportService
 	{
 		$this->output->writeln(sprintf('<info>Starting import of season %s</info>', $season));
 
-		$csvUrl = $this->sources['roster']['baseUrl'] . $this->sources['roster']['path'] . static::ROSTER_FILE_PREFIX . $season . self::ROSTER_FILE_SUFFIX . '.csv';
-
-		$records = $this->readCsv($csvUrl);
+		$fileInfo = $this->resourceHandlerService->buildRosterFileInfo($season);
+		$records = $this->resourceHandlerService->readCsvFromUrl($fileInfo);
 
 		if ($season === (int)(new DateTime())->format('Y')) {
 			$this->output->writeln('<info>Set all teams to inactive</info>');
@@ -127,19 +112,48 @@ class ImportService
 		$this->entityManager->clear();
 	}
 
-	private function readCsv($url): Iterator
+	public function importPlayByPlaySeason(int $season)
 	{
-		$content = file_get_contents($url);
+		$this->output->writeln(sprintf('<info>Starting import of season %s</info>', $season));
 
-		$reader = Reader::createFromString($content);
-		$reader->setDelimiter(static::DEFAULT_DELIMITER);
-		$reader->setEnclosure(static::DEFAULT_ENCLOSURE);
-		$reader->setHeaderOffset(0);
+		$fileInfo = $this->resourceHandlerService->buildPlayByPlayFileInfo($season);
 
-		$this->foundRows = $reader->count();
+		$this->resourceHandlerService->extractGzipFromUrl($fileInfo);
+		$records = $this->resourceHandlerService->readCsvFromTemporaryStorage($fileInfo);
 
-		return $reader->getRecords();
+
+//		if ($season === (int)(new DateTime())->format('Y')) {
+//			$this->output->writeln('<info>Set all teams to inactive</info>');
+//			$this->deactivateAllTeams();
+//		}
+//
+//		$this->initProgressBar($this->foundRows);
+//
+		foreach ($records as $record) {
+			dump($record);
+			die();
+//			$this->progressBar->setMessage(sprintf(
+//				'Importing %s for Team %s',
+//				$record[PlayerInterface::COLUMN_PLAYER_FULLNAME],
+//				$record[TeamInterface::COLUMN_TEAM_ABBREVIATION]
+//			));
+//
+//			$team = $this->handleTeam($record[TeamInterface::COLUMN_TEAM_ABBREVIATION], $season, $interactive);
+//			$player = $this->handlePlayer($record);
+//			$this->handleRosterAssignment($season, $record, $team, $player);
+//
+//			$this->progressBar->advance();
+		}
+//
+//		$this->progressBar->setMessage(sprintf(
+//			'Import for season %s finished.', $season
+//		));
+//		$this->progressBar->finish();
+//
+//		$this->entityManager->clear();
 	}
+
+
 
 	private function deactivateAllTeams()
 	{
@@ -175,44 +189,14 @@ class ImportService
 
 	private function handlePlayer(array $record): Player
 	{
-		$player = $this->playerRepository->findUniquePlayer($record);
+		$player = $this->playerConverter->toEntity($record);
 
-		if (!$player) {
-			$player = new Player();
-		}
+		$this->entityManager->persist($player);
+		$this->entityManager->flush();
 
-		$player->setFirstName($record[PlayerInterface::COLUMN_PLAYER_FIRSTNAME]);
-		$player->setLastName($record[PlayerInterface::COLUMN_PLAYER_LASTNAME]);
-		$player->setBirthDate($this->buildBirthDate($record[PlayerInterface::COLUMN_PLAYER_BIRTHDATE]));
-
-		$player->setHeight(
-			$this->buildHeight($record[PlayerInterface::COLUMN_PLAYER_HEIGHT])
-		);
-		$player->setWeight(
-			$this->buildWeight($record[PlayerInterface::COLUMN_PLAYER_WEIGHT])
-		);
-		$player->setCollege($record[PlayerInterface::COLUMN_PLAYER_COLLEGE]);
-		$player->setHighSchool($record[PlayerInterface::COLUMN_PLAYER_HIGHSCHOOL]);
-
-		if ($record[PlayerInterface::COLUMN_PLAYER_GSIS_ID] !== static::NOT_AVAILABLE) {
-			$player->setGsisId($record[PlayerInterface::COLUMN_PLAYER_GSIS_ID]);
-		}
-		if ($record[PlayerInterface::COLUMN_PLAYER_ESPN_ID] !== static::NOT_AVAILABLE) {
-			$player->setEspnId($record[PlayerInterface::COLUMN_PLAYER_ESPN_ID]);
-		}
-		if ($record[PlayerInterface::COLUMN_PLAYER_SPORTRADAR_ID] !== static::NOT_AVAILABLE) {
-			$player->setSportradarId($record[PlayerInterface::COLUMN_PLAYER_SPORTRADAR_ID]);
-		}
-		if ($record[PlayerInterface::COLUMN_PLAYER_YAHOO_ID] !== static::NOT_AVAILABLE) {
-			$player->setYahooId($record[PlayerInterface::COLUMN_PLAYER_YAHOO_ID]);
-		}
-		if ($record[PlayerInterface::COLUMN_PLAYER_ROTOWIRE_ID] !== static::NOT_AVAILABLE) {
-			$player->setRotowireId($record[PlayerInterface::COLUMN_PLAYER_ROTOWIRE_ID]);
-		}
-
-		$player->setHeadshotUrl($record[PlayerInterface::COLUMN_PLAYER_HEADSHOT_URL]);
-
-		$this->playerRepository->persistPlayer($player);
+		/**
+		 * @todo: other "handleX"-methods like this one!
+		 */
 
 		return $player;
 	}
@@ -241,54 +225,9 @@ class ImportService
 		return $rosterAssignment;
 	}
 
-	private function buildBirthDate(string $birthDateString): ?DateTimeImmutable
-	{
-		if ($birthDateString === static::NOT_AVAILABLE) {
-			return null;
-		}
 
-		foreach (static::$birthDateSourceFormats as $birthDateSourceFormat) {
-			$birthDate = DateTimeImmutable::createFromFormat($birthDateSourceFormat, $birthDateString);
-			if ($birthDate) {
-				return $birthDate;
-			}
-		}
 
-		return null;
-	}
 
-	private function buildHeight(string $heightString): ?Player\Height
-	{
-		$result = null;
-
-		if ($heightString === static::NOT_AVAILABLE) {
-			return null;
-		}
-
-		foreach (static::$heightParsingPatterns as $heightParsingPattern) {
-			preg_match($heightParsingPattern, $heightString, $result);
-			if (array_key_exists('feet', $result) || array_key_exists('inches', $result)) {
-				break;
-			}
-		}
-
-		$height = new Player\Height();
-		$height->setFeet((int)$result['feet']);
-		$height->setInches((int)$result['inches']);
-		$height->setCm($height->calculateCm());
-
-		return $height;
-	}
-
-	private function buildWeight(string $weightString): Player\Weight
-	{
-		$weight = new Player\Weight();
-
-		$weight->setPounds((int)$weightString);
-		$weight->setKilograms($weight->calculateKilograms());
-
-		return $weight;
-	}
 
 	private function requestTeamName(string $abbreviation): string
 	{

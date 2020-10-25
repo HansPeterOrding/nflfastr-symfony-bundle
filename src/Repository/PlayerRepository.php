@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace HansPeterOrding\NflFastrSymfonyBundle\Repository;
 
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Repository\AbstractNflRepository;
+use Doctrine\ORM\Mapping\Entity;
 use Doctrine\Persistence\ManagerRegistry;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Player;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\PlayerInterface;
-use HansPeterOrding\NflFastrSymfonyBundle\Service\ImportService;
 
 /**
  * @method findOneBy(array $criteria, array $orderBy = null): ?Player
  * @method findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null): Player[]
  * @method findAll(): Player[]
  * @method find($id, $lockMode = null, $lockVersion = null): Player[]
+ * @method findUniqueEntity(array $data) : ?Player
  */
-class PlayerRepository extends ServiceEntityRepository
+class PlayerRepository extends AbstractNflRepository implements NflRepositoryInterface
 {
 	const FIELD_GSIS_ID = 'gsisId';
 	const FIELD_ESPN_ID = 'espnId';
@@ -24,7 +25,7 @@ class PlayerRepository extends ServiceEntityRepository
 	const FIELD_YAHOO_ID = 'yahooId';
 	const FIELD_ROTOWIRE_ID = 'rotowireId';
 
-	private static array $uniquePlayerFields = [
+	private static array $uniqueEntityFields = [
 		PlayerInterface::COLUMN_PLAYER_GSIS_ID       => self::FIELD_GSIS_ID,
 		PlayerInterface::COLUMN_PLAYER_ESPN_ID       => self::FIELD_ESPN_ID,
 		PlayerInterface::COLUMN_PLAYER_SPORTRADAR_ID => self::FIELD_SPORTRADAR_ID,
@@ -54,18 +55,5 @@ class PlayerRepository extends ServiceEntityRepository
 	public function findPlayerByGsisId(string $gsisId): ?Player
 	{
 		return $this->findOneBy(['gsisId' => $gsisId]);
-	}
-
-	public function findUniquePlayer(array $record): ?Player
-	{
-		foreach (static::$uniquePlayerFields as $recordColumn => $databaseField) {
-			if ($record[$recordColumn] !== ImportService::NOT_AVAILABLE) {
-				return $this->findOneBy([
-					$databaseField => $record[$recordColumn]
-				]);
-			}
-		}
-
-		return null;
 	}
 }

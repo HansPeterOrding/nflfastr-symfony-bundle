@@ -7,13 +7,24 @@ services:
     autoconfigure: true
     public: true
 
+  nfl_fastr_symfony.resource_handler_service:
+    class: HansPeterOrding\NflFastrSymfonyBundle\Service\ResourceHandlerService
+    arguments:
+      $temporaryLocalStorage: '@temporary.play_by_play'
+      $sources: []
+
   nfl_fastr_symfony.import_service:
     class: HansPeterOrding\NflFastrSymfonyBundle\Service\ImportService
-    arguments:
-      $sources: []
 
   nfl_fastr_symfony.import_roster_command:
     class: HansPeterOrding\NflFastrSymfonyBundle\Command\ImportNflFastr\ImportRosterCommand
+    tags:
+      - { name: 'console.command' }
+    arguments:
+      $importService: '@nfl_fastr_symfony.import_service'
+
+  nfl_fastr_symfony.import_plays_command:
+    class: HansPeterOrding\NflFastrSymfonyBundle\Command\ImportNflFastr\ImportPlaysCommand
     tags:
       - { name: 'console.command' }
     arguments:
