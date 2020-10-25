@@ -13,6 +13,8 @@ services:
       $temporaryLocalStorage: '@temporary.play_by_play'
       $sources: []
 
+  HansPeterOrding\NflFastrSymfonyBundle\Service\ResourceHandlerService: '@nfl_fastr_symfony.resource_handler_service'
+
   nfl_fastr_symfony.import_service:
     class: HansPeterOrding\NflFastrSymfonyBundle\Service\ImportService
 
@@ -33,3 +35,6 @@ services:
   HansPeterOrding\NflFastrSymfonyBundle\Repository\TeamRepository: ~
   HansPeterOrding\NflFastrSymfonyBundle\Repository\PlayerRepository: ~
   HansPeterOrding\NflFastrSymfonyBundle\Repository\RosterAssignmentRepository: ~
+
+  HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\PlayerConverterInterface:
+    class: HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\PlayerConverter
