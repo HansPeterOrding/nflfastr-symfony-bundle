@@ -9,7 +9,8 @@
     "symfony/console": "^5.1",
     "symfony/dependency-injection": "^5.1",
     "symfony/http-kernel": "^5.1",
-    "symfony/orm-pack": "^2.0"
+    "symfony/orm-pack": "^2.0",
+    "league/flysystem-bundle": "^1.5"
   },
   "require-dev": {
     "symfony/maker-bundle": "^1.0@dev",

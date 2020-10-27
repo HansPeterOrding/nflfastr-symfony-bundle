@@ -10,7 +10,7 @@ services:
   nfl_fastr_symfony.resource_handler_service:
     class: HansPeterOrding\NflFastrSymfonyBundle\Service\ResourceHandlerService
     arguments:
-      $temporaryLocalStorage: '@temporary.play_by_play'
+      $temporaryLocalStorage: '@nflfastrsymfony.temporarystorage'
       $sources: []
 
   HansPeterOrding\NflFastrSymfonyBundle\Service\ResourceHandlerService: '@nfl_fastr_symfony.resource_handler_service'
@@ -38,3 +38,9 @@ services:
 
   HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\PlayerConverterInterface:
     class: HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\PlayerConverter
+
+  HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\TeamConverterInterface:
+    class: HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\TeamConverter
+
+  HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\RosterAssignmentConverterInterface:
+    class: HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\RosterAssignmentConverter

@@ -10,6 +10,7 @@ interface TeamInterface
 	public const STATUS_INACTIVE = 'inactive';
 
 	public const COLUMN_TEAM_ABBREVIATION = 'team';
+	public const COLUMN_SEASON = 'season';
 
 	public const TEAM_TITLE_ARI = 'Arizona Cardinals';
 	public const TEAM_TITLE_ATL = 'Atlanta Falcons';

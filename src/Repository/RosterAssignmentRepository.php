@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace HansPeterOrding\NflFastrSymfonyBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Mapping\Entity;
 use Doctrine\Persistence\ManagerRegistry;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Player;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\RosterAssignment;
+use HansPeterOrding\NflFastrSymfonyBundle\Entity\RosterAssignmentInterface;
 
 /**
  * @method findOneBy(array $criteria, array $orderBy = null): ?RosterAssignment
@@ -15,8 +17,16 @@ use HansPeterOrding\NflFastrSymfonyBundle\Entity\RosterAssignment;
  * @method findAll(): RosterAssignment[]
  * @method find($id, $lockMode = null, $lockVersion = null): RosterAssignment[]
  */
-class RosterAssignmentRepository extends ServiceEntityRepository
+class RosterAssignmentRepository extends AbstractNflRepository implements NflRepositoryInterface
 {
+	const FIELD_SEASON = 'season';
+	const FIELD_PLAYER = 'player';
+
+	protected static array $uniqueEntityFields = [
+		RosterAssignmentInterface::COLUMN_ROSTERASSIGNMENT_SEASON => self::FIELD_SEASON,
+		RosterAssignmentInterface::COLUMN_ROSTERASSIGNMENT_PLAYER => self::FIELD_PLAYER
+	];
+
 	public function __construct(ManagerRegistry $registry)
 	{
 		parent::__construct($registry, RosterAssignment::class);
@@ -31,11 +41,11 @@ class RosterAssignmentRepository extends ServiceEntityRepository
 		}
 	}
 
-	public function findCurrentRosterAssignment(int $season, Player $player): ?RosterAssignment
+	public function findUniqueEntity(array $data)
 	{
 		return $this->findOneBy([
-			'season' => $season,
-			'player' => $player->getId()
+			static::$uniqueEntityFields[RosterAssignmentInterface::COLUMN_ROSTERASSIGNMENT_SEASON] => $data[RosterAssignmentInterface::COLUMN_ROSTERASSIGNMENT_SEASON],
+			static::$uniqueEntityFields[RosterAssignmentInterface::COLUMN_ROSTERASSIGNMENT_PLAYER] => $data[RosterAssignmentInterface::COLUMN_ROSTERASSIGNMENT_PLAYER]
 		]);
 	}
 }

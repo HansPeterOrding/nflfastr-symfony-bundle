@@ -32,7 +32,7 @@ class Team implements TeamInterface
 	/**
 	 * @ORM\Column(type="string", length=30)
 	 */
-	protected ?string $status = null;
+	protected ?string $status = TeamInterface::STATUS_INACTIVE;
 
 	/**
 	 * @ORM\OneToMany(targetEntity="HansPeterOrding\NflFastrSymfonyBundle\Entity\RosterAssignment", mappedBy="team")

@@ -6,6 +6,8 @@ namespace HansPeterOrding\NflFastrSymfonyBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\CsvConverterInterface;
+use HansPeterOrding\NflFastrSymfonyBundle\Entity\PlayerInterface;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Team;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\TeamInterface;
 
@@ -15,8 +17,10 @@ use HansPeterOrding\NflFastrSymfonyBundle\Entity\TeamInterface;
  * @method findAll(): Team[]
  * @method find($id, $lockMode = null, $lockVersion = null): Team[]
  */
-class TeamRepository extends ServiceEntityRepository
+class TeamRepository extends AbstractNflRepository implements NflRepositoryInterface
 {
+	const FIELD_ABBREVIATION = 'abbreviation';
+	
 	public function __construct(ManagerRegistry $registry)
 	{
 		parent::__construct($registry, Team::class);
@@ -41,8 +45,10 @@ class TeamRepository extends ServiceEntityRepository
 		$q->execute();
 	}
 
-	public function findTeamByAbbreviation(string $abbreviation): ?Team
+	public function findUniqueEntity(array $data)
 	{
-		return $this->findOneBy(['abbreviation' => $abbreviation]);
+		return $this->findOneBy([
+			self::FIELD_ABBREVIATION => $data[TeamInterface::COLUMN_TEAM_ABBREVIATION]
+		]);
 	}
 }

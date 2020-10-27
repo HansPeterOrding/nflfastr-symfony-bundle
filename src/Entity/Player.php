@@ -35,7 +35,7 @@ class Player implements PlayerInterface
 	protected ?string $lastName = null;
 
 	/**
-	 * @ORM\Column(type="datetime_immutable", nullable=true)
+	 * @ORM\Column(type="date_immutable", nullable=true)
 	 */
 	protected ?DateTimeImmutable $birthDate = null;
 

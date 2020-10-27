@@ -8,14 +8,16 @@ use App\Entity\Player;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Mapping\Entity;
 
-abstract class AbstractCsvConverter
+abstract class AbstractCsvConverter implements CsvConverterInterface
 {
 	protected ServiceEntityRepository $repository;
 
 	protected ?string $entityClass = null;
 
-	protected function getOrCreateEntity(array $data): Entity
+	protected function getOrCreateEntity(array $data)
 	{
+		$this->defineEntityClass();
+
 		$entity = $this->repository->findUniqueEntity($data);
 
 		if(!$entity) {

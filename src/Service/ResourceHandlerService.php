@@ -25,6 +25,8 @@ class ResourceHandlerService
 
 	private iterable $sources;
 
+	private int $foundRows = 0;
+
 	public function __construct(
 		FilesystemInterface $temporaryLocalStorage,
 		array $sources
@@ -88,7 +90,7 @@ class ResourceHandlerService
 
 	public function readCsvFromUrl(FileInfo $fileInfo): Iterator
 	{
-		$content = file_get_contents($fileInfo['url']);
+		$content = file_get_contents($fileInfo->getUrl());
 		$reader = Reader::createFromString($content);
 
 		return $this->getRecordsFromReader($reader);
@@ -103,5 +105,10 @@ class ResourceHandlerService
 		$this->foundRows = $reader->count();
 
 		return $reader->getRecords();
+	}
+
+	public function getFoundRows(): int
+	{
+		return $this->foundRows;
 	}
 }

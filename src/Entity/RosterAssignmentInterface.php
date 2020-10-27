@@ -10,6 +10,8 @@ interface RosterAssignmentInterface
 	public const COLUMN_ROSTERASSIGNMENT_DEPTH_CHART_POSITION = 'depth_chart_position';
 	public const COLUMN_ROSTERASSIGNMENT_JERSEY_NUMBER = 'jersey_number';
 	public const COLUMN_ROSTERASSIGNMENT_STATUS = 'status';
+	public const COLUMN_ROSTERASSIGNMENT_SEASON = 'season';
+	public const COLUMN_ROSTERASSIGNMENT_PLAYER = 'player';
 
 	public const POSITION_CENTER = 'C';
 	public const POSITION_CORNERBACK = 'CB';

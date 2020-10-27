@@ -8,5 +8,8 @@ use Doctrine\ORM\Mapping\Entity;
 
 interface NflRepositoryInterface
 {
-	public function findUniqueEntity(array $data): ?Entity;
+	const UNIQUE_ENTITY_FIELD_KEY_COLUMN = 'column';
+	const UNIQUE_ENTITY_FIELD_KEY_NOT_EMPTY = 'not_empty';
+
+	public function findUniqueEntity(array $data);
 }

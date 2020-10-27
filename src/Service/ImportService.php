@@ -7,6 +7,8 @@ namespace HansPeterOrding\NflFastrSymfonyBundle\Service;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\PlayerConverterInterface;
+use HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\RosterAssignmentConverterInterface;
+use HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\TeamConverterInterface;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Player;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\PlayerInterface;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\RosterAssignment;
@@ -26,15 +28,11 @@ class ImportService
 {
 	private ResourceHandlerService $resourceHandlerService;
 
-	private PlayerConverterInterface $playerConverter;
+	private EntityManagerInterface $entityManager;
+
+	private RosterAssignmentConverterInterface $rosterAssignmentConverter;
 
 	private TeamRepository $teamRepository;
-
-	private PlayerRepository $playerRepository;
-
-	private RosterAssignmentRepository $rosterAssignmentRepository;
-
-	private EntityManagerInterface $entityManager;
 
 	private InputInterface $input;
 
@@ -47,19 +45,13 @@ class ImportService
 	public function __construct(
 		ResourceHandlerService $resourceHandlerService,
 		EntityManagerInterface $entityManager,
-		PlayerConverterInterface $playerConverter,
-
-		TeamRepository $teamRepository,
-		RosterAssignmentRepository $rosterAssignmentRepository
-
+		RosterAssignmentConverterInterface $rosterAssignmentConverter,
+		TeamRepository $teamRepository
 	) {
 		$this->resourceHandlerService = $resourceHandlerService;
 		$this->entityManager = $entityManager;
-		$this->playerConverter = $playerConverter;
-
-
+		$this->rosterAssignmentConverter = $rosterAssignmentConverter;
 		$this->teamRepository = $teamRepository;
-		$this->rosterAssignmentRepository = $rosterAssignmentRepository;
 	}
 
 	public function setOutput(OutputInterface $output): self
@@ -88,7 +80,7 @@ class ImportService
 			$this->deactivateAllTeams();
 		}
 
-		$this->initProgressBar($this->foundRows);
+		$this->initProgressBar($this->resourceHandlerService->getFoundRows());
 
 		foreach ($records as $record) {
 			$this->progressBar->setMessage(sprintf(
@@ -97,9 +89,7 @@ class ImportService
 				$record[TeamInterface::COLUMN_TEAM_ABBREVIATION]
 			));
 
-			$team = $this->handleTeam($record[TeamInterface::COLUMN_TEAM_ABBREVIATION], $season, $interactive);
-			$player = $this->handlePlayer($record);
-			$this->handleRosterAssignment($season, $record, $team, $player);
+			$this->handleRosterDataRecord($record);
 
 			$this->progressBar->advance();
 		}
@@ -160,81 +150,14 @@ class ImportService
 		$this->teamRepository->deactivateAll();
 	}
 
-	private function handleTeam(string $abbreviation, int $season, bool $interactive = false): Team
+	private function handleRosterDataRecord(array $record): RosterAssignment
 	{
-		$team = $this->teamRepository->findTeamByAbbreviation($abbreviation);
-		if (!$team) {
-			$team = new Team();
-			$team->setStatus(TeamInterface::STATUS_INACTIVE);
-		}
+		$rosterAssignment = $this->rosterAssignmentConverter->toEntity($record);
 
-		$team->setAbbreviation($abbreviation);
-
-		$teamName = constant("HansPeterOrding\NflFastrSymfonyBundle\Entity\TeamInterface::TEAM_TITLE_" . $abbreviation);
-		if ($teamName === null || $interactive) {
-			if ($teamName === null) {
-				$this->output->writeln(sprintf('<error>No default team title found for %s</error>', $abbreviation));
-			}
-			$teamName = $this->requestTeamName($abbreviation);
-		}
-		$team->setName($teamName);
-		if ($season === (int)(new DateTime())->format('Y')) {
-			$team->setStatus(TeamInterface::STATUS_ACTIVE);
-		}
-
-		$this->teamRepository->persistTeam($team);
-
-		return $team;
-	}
-
-	private function handlePlayer(array $record): Player
-	{
-		$player = $this->playerConverter->toEntity($record);
-
-		$this->entityManager->persist($player);
+		$this->entityManager->persist($rosterAssignment);
 		$this->entityManager->flush();
 
-		/**
-		 * @todo: other "handleX"-methods like this one!
-		 */
-
-		return $player;
-	}
-
-	private function handleRosterAssignment(int $season, array $record, Team $team, Player $player): RosterAssignment
-	{
-		$rosterAssignment = $this->rosterAssignmentRepository->findCurrentRosterAssignment($season, $player);
-
-		if (!$rosterAssignment) {
-			$rosterAssignment = new RosterAssignment();
-		}
-
-		$rosterAssignment->setTeam($team);
-		$rosterAssignment->setPlayer($player);
-		$rosterAssignment->setSeason($season);
-
-		$rosterAssignment->setPosition($record[RosterAssignmentInterface::COLUMN_ROSTERASSIGNMENT_POSITION]);
-		$rosterAssignment->setDepthChartPosition($record[RosterAssignmentInterface::COLUMN_ROSTERASSIGNMENT_DEPTH_CHART_POSITION]);
-		$rosterAssignment->setJerseyNumber((int)$record[RosterAssignmentInterface::COLUMN_ROSTERASSIGNMENT_JERSEY_NUMBER]);
-		$rosterAssignment->setStatus(
-			RosterAssignment::$statusMappings[$record[RosterAssignmentInterface::COLUMN_ROSTERASSIGNMENT_STATUS]]
-		);
-
-		$this->rosterAssignmentRepository->persistRosterAssignment($rosterAssignment);
-
 		return $rosterAssignment;
-	}
-
-
-
-
-
-	private function requestTeamName(string $abbreviation): string
-	{
-		$nameQuestion = new Question('Bitte geben Sie einen Namen für das Team "' . $abbreviation . '" ein: ');
-		$helper = new QuestionHelper();
-
-		return $helper->ask($this->input, $this->output, $nameQuestion);
 	}
 
 	private function initProgressBar(int $max)

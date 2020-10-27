@@ -44,7 +44,7 @@ class PlayerConverter extends AbstractCsvConverter implements PlayerConverterInt
 
 		$player->setFirstName($record[PlayerInterface::COLUMN_PLAYER_FIRSTNAME]);
 		$player->setLastName($record[PlayerInterface::COLUMN_PLAYER_LASTNAME]);
-		$player->setBirthDate($this->buildBirthDate($record[PlayerInterface::COLUMN_PLAYER_BIRTHDATE]));
+		$player->setBirthDate(static::buildBirthDate($record[PlayerInterface::COLUMN_PLAYER_BIRTHDATE]));
 
 		$player->setHeight(
 			$this->buildHeight($record[PlayerInterface::COLUMN_PLAYER_HEIGHT])
@@ -76,7 +76,7 @@ class PlayerConverter extends AbstractCsvConverter implements PlayerConverterInt
 		return $player;
 	}
 
-	private function buildBirthDate(string $birthDateString): ?DateTimeImmutable
+	public static function buildBirthDate(string $birthDateString): ?DateTimeImmutable
 	{
 		if ($birthDateString === CsvConverterInterface::FIELD_VALUE_NOT_AVAILABLE) {
 			return null;

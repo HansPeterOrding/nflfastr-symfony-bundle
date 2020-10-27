@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace HansPeterOrding\NflFastrSymfonyBundle\Repository;
 
-use App\Repository\AbstractNflRepository;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\Persistence\ManagerRegistry;
+use HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\PlayerConverter;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Player;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\PlayerInterface;
 
@@ -24,8 +24,11 @@ class PlayerRepository extends AbstractNflRepository implements NflRepositoryInt
 	const FIELD_SPORTRADAR_ID = 'sportradarId';
 	const FIELD_YAHOO_ID = 'yahooId';
 	const FIELD_ROTOWIRE_ID = 'rotowireId';
+	const FIELD_FIRSTNAME = 'firstName';
+	const FIELD_LASTNAME = 'lastName';
+	const FIELD_BIRTHDATE = 'birthDate';
 
-	private static array $uniqueEntityFields = [
+	protected static array $uniqueEntityFields = [
 		PlayerInterface::COLUMN_PLAYER_GSIS_ID       => self::FIELD_GSIS_ID,
 		PlayerInterface::COLUMN_PLAYER_ESPN_ID       => self::FIELD_ESPN_ID,
 		PlayerInterface::COLUMN_PLAYER_SPORTRADAR_ID => self::FIELD_SPORTRADAR_ID,
@@ -47,13 +50,19 @@ class PlayerRepository extends AbstractNflRepository implements NflRepositoryInt
 		}
 	}
 
-	public function findPlayerBySportradarId(string $sportradarId): ?Player
+	public function findUniqueEntity(array $data)
 	{
-		return $this->findOneBy(['sportradarId' => $sportradarId]);
-	}
+		$player = parent::findUniqueEntity($data);
 
-	public function findPlayerByGsisId(string $gsisId): ?Player
-	{
-		return $this->findOneBy(['gsisId' => $gsisId]);
+		if(!$player) {
+			$birthdate = PlayerConverter::buildBirthDate($data[PlayerInterface::COLUMN_PLAYER_BIRTHDATE]);
+			$player = $this->findOneBy([
+				self::FIELD_FIRSTNAME => $data[PlayerInterface::COLUMN_PLAYER_FIRSTNAME],
+				self::FIELD_LASTNAME => $data[PlayerInterface::COLUMN_PLAYER_LASTNAME],
+				self::FIELD_BIRTHDATE => $birthdate
+			]);
+		}
+
+		return $player;
 	}
 }

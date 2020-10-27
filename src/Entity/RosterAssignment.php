@@ -13,34 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class RosterAssignment implements RosterAssignmentInterface
 {
-	public static array $statusMappings = [
-		'ACT'                          => RosterAssignmentInterface::STATUS_ACTIVE,
-		'Active'                       => RosterAssignmentInterface::STATUS_ACTIVE,
-		'CUT'                          => RosterAssignmentInterface::STATUS_INACTIVE,
-		'DEV'                          => RosterAssignmentInterface::STATUS_PRACTICE_SQUAD,
-		'EXE'                          => RosterAssignmentInterface::STATUS_INACTIVE,
-		'Inactive'                     => RosterAssignmentInterface::STATUS_INACTIVE,
-		'Injured Reserve'              => RosterAssignmentInterface::STATUS_INJURED_RESERVE,
-		'NA'                           => RosterAssignmentInterface::STATUS_INACTIVE,
-		'NON'                          => RosterAssignmentInterface::STATUS_INACTIVE,
-		'NWT'                          => RosterAssignmentInterface::STATUS_INACTIVE,
-		'Physically Unable to Perform' => RosterAssignmentInterface::STATUS_PHYSICALLY_UNABLE_TO_PERFORM,
-		'Practice Squad'               => RosterAssignmentInterface::STATUS_PRACTICE_SQUAD,
-		'PUP'                          => RosterAssignmentInterface::STATUS_PHYSICALLY_UNABLE_TO_PERFORM,
-		'RES'                          => RosterAssignmentInterface::STATUS_INJURED_RESERVE,
-		'Reserve/COVID-19'             => RosterAssignmentInterface::STATUS_RESERVE_COVID,
-		'RET'                          => RosterAssignmentInterface::STATUS_INACTIVE,
-		'RFA'                          => RosterAssignmentInterface::STATUS_INACTIVE,
-		'RSN'                          => RosterAssignmentInterface::STATUS_INACTIVE,
-		'SUS'                          => RosterAssignmentInterface::STATUS_INACTIVE,
-		'TRC'                          => RosterAssignmentInterface::STATUS_INACTIVE,
-		'TRD'                          => RosterAssignmentInterface::STATUS_INACTIVE,
-		'TRT'                          => RosterAssignmentInterface::STATUS_INACTIVE,
-		'UDF'                          => RosterAssignmentInterface::STATUS_INACTIVE,
-		'UFA'                          => RosterAssignmentInterface::STATUS_INACTIVE,
-		'Voluntary Opt Out'            => RosterAssignmentInterface::STATUS_VOLUNTARY_OPT_OUT
-	];
-
 	/**
 	 * @ORM\Id()
 	 * @ORM\GeneratedValue()
@@ -49,13 +21,13 @@ class RosterAssignment implements RosterAssignmentInterface
 	protected ?int $id = null;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="HansPeterOrding\NflFastrSymfonyBundle\Entity\Team", inversedBy="rosterAssignments")
+	 * @ORM\ManyToOne(targetEntity="HansPeterOrding\NflFastrSymfonyBundle\Entity\Team", inversedBy="rosterAssignments", cascade={"persist"})
 	 * @ORM\JoinColumn(name="team_id", referencedColumnName="id")
 	 */
 	protected ?Team $team = null;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="HansPeterOrding\NflFastrSymfonyBundle\Entity\Player", inversedBy="rosterAssignments")
+	 * @ORM\ManyToOne(targetEntity="HansPeterOrding\NflFastrSymfonyBundle\Entity\Player", inversedBy="rosterAssignments", cascade={"persist"})
 	 * @ORM\JoinColumn(name="player_id", referencedColumnName="id")
 	 */
 	protected ?Player $player = null;
