@@ -14,7 +14,7 @@ matrix:
   fast_finish: true
   include:
     - php: 7.4
-      env: DEPENDENCIES="symfony/flex"
+      env: DEPENDENCIES="symfony/flex:^1.9"
 
   allow_failures:
     # Dev-master is allowed to fail.
