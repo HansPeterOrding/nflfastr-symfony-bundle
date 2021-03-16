@@ -103,38 +103,34 @@ class ImportService
 		$records = $this->resourceHandlerService->readCsvFromTemporaryStorage($fileInfo);
 
 
-//		if ($season === (int)(new DateTime())->format('Y')) {
-//			$this->output->writeln('<info>Set all teams to inactive</info>');
-//			$this->deactivateAllTeams();
-//		}
-//
-//		$this->initProgressBar($this->foundRows);
-//
-		foreach ($records as $record) {
-			dump($record);
-			die();
-//			$this->progressBar->setMessage(sprintf(
-//				'Importing %s for Team %s',
-//				$record[PlayerInterface::COLUMN_PLAYER_FULLNAME],
-//				$record[TeamInterface::COLUMN_TEAM_ABBREVIATION]
-//			));
-//
-//			$team = $this->handleTeam($record[TeamInterface::COLUMN_TEAM_ABBREVIATION], $season, $interactive);
-//			$player = $this->handlePlayer($record);
-//			$this->handleRosterAssignment($season, $record, $team, $player);
-//
-//			$this->progressBar->advance();
+		if ($season === (int)(new DateTime())->format('Y')) {
+			$this->output->writeln('<info>Set all teams to inactive</info>');
+			$this->deactivateAllTeams();
 		}
-//
-//		$this->progressBar->setMessage(sprintf(
-//			'Import for season %s finished.', $season
-//		));
-//		$this->progressBar->finish();
-//
-//		$this->entityManager->clear();
+
+		$this->initProgressBar($this->foundRows);
+
+		foreach ($records as $record) {
+			$this->progressBar->setMessage(sprintf(
+				'Importing %s for Team %s',
+				$record[PlayerInterface::COLUMN_PLAYER_FULLNAME],
+				$record[TeamInterface::COLUMN_TEAM_ABBREVIATION]
+			));
+
+			$team = $this->handleTeam($record[TeamInterface::COLUMN_TEAM_ABBREVIATION], $season, $interactive);
+			$player = $this->handlePlayer($record);
+			$this->handleRosterAssignment($season, $record, $team, $player);
+
+			$this->progressBar->advance();
+		}
+
+		$this->progressBar->setMessage(sprintf(
+			'Import for season %s finished.', $season
+		));
+		$this->progressBar->finish();
+
+		$this->entityManager->clear();
 	}
-
-
 
 	private function deactivateAllTeams()
 	{
@@ -153,8 +149,10 @@ class ImportService
 
 	private function initProgressBar(int $max)
 	{
-		ProgressBar::setFormatDefinition('custom',
-			"%bar% %current%/%max% (%percent%)\nElapsed time: %elapsed:-80s%\nRemaining time: %remaining:-80s%\nEstimated time: %estimated:-80s%\nMemory used: %memory:-80s% \n%message:-80s%\n\n");
+		ProgressBar::setFormatDefinition(
+			'custom',
+			"%bar% %current%/%max% (%percent%)\nElapsed time: %elapsed:-80s%\nRemaining time: %remaining:-80s%\nEstimated time: %estimated:-80s%\nMemory used: %memory:-80s% \n%message:-80s%\n\n"
+		);
 		$this->progressBar = new ProgressBar($this->output, $max);
 		$this->progressBar->setFormat('custom');
 		$this->progressBar->setBarCharacter('<fg=green>⚬</>');
