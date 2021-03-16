@@ -1,0 +1,12 @@
+HansPeterOrding\NflFastrSymfonyBundle\Entity\Player\Height:
+  type: embeddable
+  fields:
+    feet:
+      type: integer
+      nullable: true
+    inches:
+      type: integer
+      nullable: true
+    cm:
+      type: integer
+      nullable: true

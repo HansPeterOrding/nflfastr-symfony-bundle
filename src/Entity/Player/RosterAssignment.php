@@ -2,64 +2,30 @@
 
 declare(strict_types=1);
 
-namespace HansPeterOrding\NflFastrSymfonyBundle\Entity;
+namespace HansPeterOrding\NflFastrSymfonyBundle\Entity\Player;
 
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
+use HansPeterOrding\NflFastrSymfonyBundle\Entity\Player;
+use HansPeterOrding\NflFastrSymfonyBundle\Entity\Team;
 
-/**
- * @ORM\Entity()
- * @ORM\HasLifecycleCallbacks()
- */
 class RosterAssignment implements RosterAssignmentInterface
 {
-	/**
-	 * @ORM\Id()
-	 * @ORM\GeneratedValue()
-	 * @ORM\Column(type="integer")
-	 */
 	protected ?int $id = null;
 
-	/**
-	 * @ORM\ManyToOne(targetEntity="HansPeterOrding\NflFastrSymfonyBundle\Entity\Team", inversedBy="rosterAssignments", cascade={"persist"})
-	 * @ORM\JoinColumn(name="team_id", referencedColumnName="id")
-	 */
 	protected ?Team $team = null;
 
-	/**
-	 * @ORM\ManyToOne(targetEntity="HansPeterOrding\NflFastrSymfonyBundle\Entity\Player", inversedBy="rosterAssignments", cascade={"persist"})
-	 * @ORM\JoinColumn(name="player_id", referencedColumnName="id")
-	 */
 	protected ?Player $player = null;
 
-	/**
-	 * @ORM\Column(type="integer")
-	 */
 	protected ?int $season = null;
 
-	/**
-	 * @ORM\Column(type="string", length=255)
-	 */
 	protected ?string $position = null;
 
-	/**
-	 * @ORM\Column(type="string", length=255)
-	 */
 	protected ?string $depthChartPosition = null;
 
-	/**
-	 * @ORM\Column(type="integer")
-	 */
 	protected ?int $jerseyNumber = null;
 
-	/**
-	 * @ORM\Column(type="string", length=255)
-	 */
 	protected ?string $status = null;
 
-	/**
-	 * @ORM\Column(type="datetime")
-	 */
 	protected ?DateTime $lastUpdated = null;
 
 	public function getId(): ?int
@@ -170,10 +136,6 @@ class RosterAssignment implements RosterAssignmentInterface
 		return $this;
 	}
 
-	/**
-	 * @ORM\PrePersist()
-	 * @ORM\PreUpdate()
-	 */
 	public function updateLastUpdated()
 	{
 		$this->lastUpdated = new DateTime();

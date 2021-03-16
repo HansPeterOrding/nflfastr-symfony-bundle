@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace HansPeterOrding\NflFastrSymfonyBundle\Repository;
 
-use Doctrine\ORM\Mapping\Entity;
 use Doctrine\Persistence\ManagerRegistry;
 use HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\PlayerConverter;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Player;
@@ -15,7 +14,6 @@ use HansPeterOrding\NflFastrSymfonyBundle\Entity\PlayerInterface;
  * @method findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null): Player[]
  * @method findAll(): Player[]
  * @method find($id, $lockMode = null, $lockVersion = null): Player[]
- * @method findUniqueEntity(array $data) : ?Player
  */
 class PlayerRepository extends AbstractNflRepository implements NflRepositoryInterface
 {
@@ -50,15 +48,20 @@ class PlayerRepository extends AbstractNflRepository implements NflRepositoryInt
 		}
 	}
 
+	/**
+	 * @param array $data
+	 * @return Player|null
+	 */
 	public function findUniqueEntity(array $data)
 	{
+		/** @var Player|null $player */
 		$player = parent::findUniqueEntity($data);
 
-		if(!$player) {
+		if (!$player) {
 			$birthdate = PlayerConverter::buildBirthDate($data[PlayerInterface::COLUMN_PLAYER_BIRTHDATE]);
 			$player = $this->findOneBy([
 				self::FIELD_FIRSTNAME => $data[PlayerInterface::COLUMN_PLAYER_FIRSTNAME],
-				self::FIELD_LASTNAME => $data[PlayerInterface::COLUMN_PLAYER_LASTNAME],
+				self::FIELD_LASTNAME  => $data[PlayerInterface::COLUMN_PLAYER_LASTNAME],
 				self::FIELD_BIRTHDATE => $birthdate
 			]);
 		}

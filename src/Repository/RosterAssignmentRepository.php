@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace HansPeterOrding\NflFastrSymfonyBundle\Repository;
 
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Mapping\Entity;
 use Doctrine\Persistence\ManagerRegistry;
-use HansPeterOrding\NflFastrSymfonyBundle\Entity\Player;
-use HansPeterOrding\NflFastrSymfonyBundle\Entity\RosterAssignment;
-use HansPeterOrding\NflFastrSymfonyBundle\Entity\RosterAssignmentInterface;
+use HansPeterOrding\NflFastrSymfonyBundle\Entity\Player\RosterAssignment;
+use HansPeterOrding\NflFastrSymfonyBundle\Entity\Player\RosterAssignmentInterface;
 
 /**
  * @method findOneBy(array $criteria, array $orderBy = null): ?RosterAssignment
@@ -41,6 +38,10 @@ class RosterAssignmentRepository extends AbstractNflRepository implements NflRep
 		}
 	}
 
+	/**
+	 * @param array $data
+	 * @return RosterAssignment|null
+	 */
 	public function findUniqueEntity(array $data)
 	{
 		return $this->findOneBy([

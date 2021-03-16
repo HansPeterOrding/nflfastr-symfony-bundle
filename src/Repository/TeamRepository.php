@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace HansPeterOrding\NflFastrSymfonyBundle\Repository;
 
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\CsvConverterInterface;
-use HansPeterOrding\NflFastrSymfonyBundle\Entity\PlayerInterface;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Team;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\TeamInterface;
 
@@ -45,6 +42,10 @@ class TeamRepository extends AbstractNflRepository implements NflRepositoryInter
 		$q->execute();
 	}
 
+	/**
+	 * @param array $data
+	 * @return Team|null
+	 */
 	public function findUniqueEntity(array $data)
 	{
 		return $this->findOneBy([

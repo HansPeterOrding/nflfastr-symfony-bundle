@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HansPeterOrding\NflFastrSymfonyBundle\Command\ImportNflFastr;
 
+use DateTime;
 use HansPeterOrding\NflFastrSymfonyBundle\Command\AbstractImportNflFastrCommand;
 use HansPeterOrding\NflFastrSymfonyBundle\Service\ImportService;
 use Symfony\Component\Console\Command\Command;
@@ -42,7 +43,7 @@ class ImportPlaysCommand extends AbstractImportNflFastrCommand
 
 		$seasons = $input->getArgument('seasons');
 		if(!$seasons) {
-			for ($i = static::START_YEAR_ROSTERS; $i <= (new DateTime())->format('Y'); $i++) {
+			for ($i = static::START_YEAR_PLAYS; $i <= (new DateTime())->format('Y'); $i++) {
 				$seasons[] = $i;
 			}
 		}

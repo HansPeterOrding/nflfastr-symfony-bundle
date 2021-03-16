@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace HansPeterOrding\NflFastrSymfonyBundle\CsvConverter;
 
-use HansPeterOrding\NflFastrSymfonyBundle\Entity\RosterAssignment;
-use HansPeterOrding\NflFastrSymfonyBundle\Entity\RosterAssignmentInterface;
+use HansPeterOrding\NflFastrSymfonyBundle\Entity\Player\RosterAssignment;
 
 interface RosterAssignmentConverterInterface extends CsvConverterInterface
 {

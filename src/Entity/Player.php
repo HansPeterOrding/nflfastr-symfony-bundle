@@ -7,104 +7,42 @@ namespace HansPeterOrding\NflFastrSymfonyBundle\Entity;
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Player\Height;
+use HansPeterOrding\NflFastrSymfonyBundle\Entity\Player\RosterAssignment;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Player\Weight;
 
-/**
- * @ORM\Entity()
- * @ORM\HasLifecycleCallbacks()
- */
 class Player implements PlayerInterface
 {
-	/**
-	 * @ORM\Id()
-	 * @ORM\GeneratedValue()
-	 * @ORM\Column(type="integer")
-	 */
 	protected ?int $id = null;
 
-	/**
-	 * @ORM\Column(type="string", length=255)
-	 */
 	protected ?string $firstName = null;
 
-	/**
-	 * @ORM\Column(type="string", length=255)
-	 */
 	protected ?string $lastName = null;
 
-	/**
-	 * @ORM\Column(type="date_immutable", nullable=true)
-	 */
 	protected ?DateTimeImmutable $birthDate = null;
 
-	/**
-	 * @ORM\Embedded(
-	 *     class="HansPeterOrding\NflFastrSymfonyBundle\Entity\Player\Height",
-	 *     columnPrefix="height_"
-	 * )
-	 */
 	protected ?Height $height = null;
 
-	/**
-	 * @ORM\Embedded(
-	 *     class="HansPeterOrding\NflFastrSymfonyBundle\Entity\Player\Weight",
-	 *     columnPrefix="weight_"
-	 * )
-	 */
 	protected ?Weight $weight = null;
 
-	/**
-	 * @ORM\Column(type="string", length=255)
-	 */
 	protected ?string $college = null;
 
-	/**
-	 * @ORM\Column(type="string", length=255)
-	 */
 	protected ?string $highSchool = null;
 
-	/**
-	 * @ORM\Column(type="string", length=255, nullable=true)
-	 */
 	protected ?string $gsisId = null;
 
-	/**
-	 * @ORM\Column(type="string", length=255, nullable=true)
-	 */
 	protected ?string $espnId = null;
 
-	/**
-	 * @ORM\Column(type="string", length=255, nullable=true)
-	 */
 	protected ?string $sportradarId = null;
 
-	/**
-	 * @ORM\Column(type="string", length=255, nullable=true)
-	 */
 	protected ?string $yahooId = null;
 
-	/**
-	 * @ORM\Column(type="string", length=255, nullable=true)
-	 */
 	protected ?string $rotowireId = null;
 
-	/**
-	 * @ORM\Column(type="string", length=255)
-	 */
 	protected ?string $headshotUrl = null;
 
-	/**
-	 * @ORM\Column(type="datetime")
-	 */
 	protected ?DateTime $lastUpdated = null;
 
-	/**
-	 * @var RosterAssignment[]
-	 *
-	 * @ORM\OneToMany(targetEntity="HansPeterOrding\NflFastrSymfonyBundle\Entity\RosterAssignment", mappedBy="player")
-	 */
 	protected iterable $rosterAssignments;
 
 	public function __construct()
@@ -325,10 +263,6 @@ class Player implements PlayerInterface
 		return $this;
 	}
 
-	/**
-	 * @ORM\PrePersist()
-	 * @ORM\PreUpdate()
-	 */
 	public function updateLastUpdated()
 	{
 		$this->lastUpdated = new DateTime();

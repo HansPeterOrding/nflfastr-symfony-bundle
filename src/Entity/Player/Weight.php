@@ -6,20 +6,12 @@ namespace HansPeterOrding\NflFastrSymfonyBundle\Entity\Player;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Embeddable()
- */
 class Weight
 {
 	const CONVERSION_FACTOR = 0.45359237;
-	/**
-	 * @ORM\Column(type="integer")
-	 */
+
 	protected ?int $pounds = null;
 
-	/**
-	 * @ORM\Column(type="integer")
-	 */
 	protected ?int $kilograms = null;
 
 	public function getPounds(): ?int
@@ -46,13 +38,21 @@ class Weight
 		return $this;
 	}
 
-	public function calculateKilograms(): int
+	public function calculateKilograms(): ?int
 	{
+		if (null === $this->pounds) {
+			return null;
+		}
+
 		return (int)round($this->pounds * static::CONVERSION_FACTOR, 0);
 	}
 
-	public function calculatePounds(): int
+	public function calculatePounds(): ?int
 	{
+		if (null === $this->kilograms) {
+			return null;
+		}
+		
 		return (int)round($this->kilograms / static::CONVERSION_FACTOR, 2);
 	}
 }

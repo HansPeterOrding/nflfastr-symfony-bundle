@@ -1,0 +1,9 @@
+HansPeterOrding\NflFastrSymfonyBundle\Entity\Player\Weight:
+  type: embeddable
+  fields:
+    pounds:
+      type: integer
+      nullable: true
+    kilograms:
+      type: integer
+      nullable: true

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HansPeterOrding\NflFastrSymfonyBundle\Entity;
+namespace HansPeterOrding\NflFastrSymfonyBundle\Entity\Player;
 
 interface RosterAssignmentInterface
 {

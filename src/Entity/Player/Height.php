@@ -4,29 +4,15 @@ declare(strict_types=1);
 
 namespace HansPeterOrding\NflFastrSymfonyBundle\Entity\Player;
 
-use Doctrine\ORM\Mapping as ORM;
-
-/**
- * @ORM\Embeddable()
- */
 class Height
 {
 	const CONVERSION_FACTOR_FEET = 30.48;
 	const CONVERSION_FACTOR_INCHES = 2.54;
 
-	/**
-	 * @ORM\Column(type="integer", nullable=true)
-	 */
 	protected ?int $feet = null;
 
-	/**
-	 * @ORM\Column(type="integer", nullable=true)
-	 */
 	protected ?int $inches = null;
 
-	/**
-	 * @ORM\Column(type="integer", nullable=true)
-	 */
 	protected ?int $cm = null;
 
 	public function getFeet(): ?int

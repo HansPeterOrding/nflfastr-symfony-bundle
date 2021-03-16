@@ -5,38 +5,18 @@ declare(strict_types=1);
 namespace HansPeterOrding\NflFastrSymfonyBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
+use HansPeterOrding\NflFastrSymfonyBundle\Entity\Player\RosterAssignment;
 
-/**
- * @ORM\Entity()
- */
 class Team implements TeamInterface
 {
-	/**
-	 * @ORM\Id()
-	 * @ORM\GeneratedValue()
-	 * @ORM\Column(type="integer")
-	 */
 	protected ?int $id = null;
 
-	/**
-	 * @ORM\Column(type="string", length=3, nullable=false)
-	 */
 	protected ?string $abbreviation = null;
 
-	/**
-	 * @ORM\Column(type="string", length=255, nullable=true)
-	 */
 	protected ?string $name = null;
 
-	/**
-	 * @ORM\Column(type="string", length=30)
-	 */
 	protected ?string $status = TeamInterface::STATUS_INACTIVE;
 
-	/**
-	 * @ORM\OneToMany(targetEntity="HansPeterOrding\NflFastrSymfonyBundle\Entity\RosterAssignment", mappedBy="team")
-	 */
 	protected iterable $rosterAssignments;
 
 	public function __construct()

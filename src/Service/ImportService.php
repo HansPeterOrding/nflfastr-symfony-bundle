@@ -6,23 +6,14 @@ namespace HansPeterOrding\NflFastrSymfonyBundle\Service;
 
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\PlayerConverterInterface;
 use HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\RosterAssignmentConverterInterface;
-use HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\TeamConverterInterface;
-use HansPeterOrding\NflFastrSymfonyBundle\Entity\Player;
+use HansPeterOrding\NflFastrSymfonyBundle\Entity\Player\RosterAssignment;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\PlayerInterface;
-use HansPeterOrding\NflFastrSymfonyBundle\Entity\RosterAssignment;
-use HansPeterOrding\NflFastrSymfonyBundle\Entity\RosterAssignmentInterface;
-use HansPeterOrding\NflFastrSymfonyBundle\Entity\Team;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\TeamInterface;
-use HansPeterOrding\NflFastrSymfonyBundle\Repository\PlayerRepository;
-use HansPeterOrding\NflFastrSymfonyBundle\Repository\RosterAssignmentRepository;
 use HansPeterOrding\NflFastrSymfonyBundle\Repository\TeamRepository;
 use Symfony\Component\Console\Helper\ProgressBar;
-use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
 
 class ImportService
 {

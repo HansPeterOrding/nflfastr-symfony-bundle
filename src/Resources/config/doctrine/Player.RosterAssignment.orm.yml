@@ -1,0 +1,42 @@
+HansPeterOrding\NflFastrSymfonyBundle\Entity\Player\RosterAssignment:
+  type: entity
+  lifecycleCallbacks:
+    prePersist: [ updateLastUpdated ]
+    postPersist: [ updateLastUpdated ]
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    season:
+      type: integer
+    position:
+      type: string
+      length: 255
+    depthChartPosition:
+      type: string
+      length: 255
+    jerseyNumber:
+      type: integer
+    status:
+      type: string
+      length: 255
+    lastUpdated:
+      type: datetime
+  manyToOne:
+    team:
+      targetEntity: HansPeterOrding\NflFastrSymfonyBundle\Entity\Team
+      cascade: [ "persist" ]
+      inversedBy: rosterAssignments
+      joinColumn:
+        name: team_id
+        referencedColumnName: id
+    player:
+      targetEntity: HansPeterOrding\NflFastrSymfonyBundle\Entity\Player
+      cascade: [ "persist" ]
+      inversedBy: rosterAssignments
+      joinColumn:
+        name: player_id
+        referencedColumnName: id
+

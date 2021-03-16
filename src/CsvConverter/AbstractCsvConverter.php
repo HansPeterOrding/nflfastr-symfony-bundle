@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace HansPeterOrding\NflFastrSymfonyBundle\CsvConverter;
 
-use App\Entity\Player;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Mapping\Entity;
 
 abstract class AbstractCsvConverter implements CsvConverterInterface
 {
