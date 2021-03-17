@@ -7,6 +7,7 @@ namespace HansPeterOrding\NflFastrSymfonyBundle\Entity;
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
+use HansPeterOrding\NflFastrSymfonyBundle\Entity\Game\Play\PlayerAssignment;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Player\Height;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Player\RosterAssignment;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Player\Weight;
@@ -43,12 +44,21 @@ class Player implements PlayerInterface
 
 	protected ?DateTime $lastUpdated = null;
 
-	protected iterable $rosterAssignments;
+	/**
+	 * @var ArrayCollection|RosterAssignment[]
+	 */
+	protected ArrayCollection $rosterAssignments;
+
+	/**
+	 * @var ArrayCollection|PlayerAssignment[]
+	 */
+	protected ArrayCollection $playerAssignments;
 
 	public function __construct()
 	{
 		$this->height = new Height();
 		$this->rosterAssignments = new ArrayCollection();
+		$this->playerAssignments = new ArrayCollection();
 	}
 
 	public function getId(): ?int
@@ -232,7 +242,7 @@ class Player implements PlayerInterface
 	}
 
 	/**
-	 * @return RosterAssignment[]
+	 * @return ArrayCollection|RosterAssignment[]
 	 */
 	public function getRosterAssignments(): iterable
 	{
@@ -240,7 +250,7 @@ class Player implements PlayerInterface
 	}
 
 	/**
-	 * @param RosterAssignment[] $rosterAssignments
+	 * @param ArrayCollection|RosterAssignment[] $rosterAssignments
 	 */
 	public function setRosterAssignments(iterable $rosterAssignments): self
 	{
@@ -259,6 +269,24 @@ class Player implements PlayerInterface
 	public function removeRosterAssignment(RosterAssignment $rosterAssignment): self
 	{
 		$this->rosterAssignments->remove($rosterAssignment->getId());
+
+		return $this;
+	}
+
+	/**
+	 * @return ArrayCollection|PlayerAssignment[]
+	 */
+	public function getPlayerAssignments()
+	{
+		return $this->playerAssignments;
+	}
+
+	/**
+	 * @param ArrayCollection|PlayerAssignment[] $playerAssignments
+	 */
+	public function setPlayerAssignments(iterable $playerAssignments): self
+	{
+		$this->playerAssignments = $playerAssignments;
 
 		return $this;
 	}

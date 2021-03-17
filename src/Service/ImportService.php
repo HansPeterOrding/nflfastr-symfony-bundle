@@ -151,7 +151,7 @@ class ImportService
 	{
 		ProgressBar::setFormatDefinition(
 			'custom',
-			"%bar% %current%/%max% (%percent%)\nElapsed time: %elapsed:-80s%\nRemaining time: %remaining:-80s%\nEstimated time: %estimated:-80s%\nMemory used: %memory:-80s% \n%message:-80s%\n\n"
+			"%bar% %current%/%max% (%percent%%)\nElapsed time: %elapsed:-80s%\nRemaining time: %remaining:-80s%\nEstimated time: %estimated:-80s%\nMemory used: %memory:-80s% \n%message:-80s%\n\n"
 		);
 		$this->progressBar = new ProgressBar($this->output, $max);
 		$this->progressBar->setFormat('custom');

@@ -38,3 +38,14 @@ in the ``config/bundles.php`` file of your project::
     ];
 
 .. _`installation chapter`: https://getcomposer.org/doc/00-intro.md
+
+Commands
+~~~~~~~~
+
+Create new Migration in requiring repository:
+
+.. code-block:: terminal
+
+    $ bin/console doctrine:migrations:diff --namespace=HansPeterOrding\\NflFastrSymfonyBundle\\Migrations
+
+

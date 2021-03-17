@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HansPeterOrding\NflFastrSymfonyBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use HansPeterOrding\NflFastrSymfonyBundle\Entity\Game\Play\TeamAssignment;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Player\RosterAssignment;
 
 class Team implements TeamInterface
@@ -17,11 +18,31 @@ class Team implements TeamInterface
 
 	protected ?string $status = TeamInterface::STATUS_INACTIVE;
 
-	protected iterable $rosterAssignments;
+	/**
+	 * @var ArrayCollection|RosterAssignment[]
+	 */
+	protected ArrayCollection $rosterAssignments;
+
+	/**
+	 * @var ArrayCollection|Game[]
+	 */
+	protected ArrayCollection $homeGames;
+
+	/**
+	 * @var ArrayCollection|Game[]
+	 */
+	protected ArrayCollection $awayGames;
+
+	/**
+	 * @var ArrayCollection|TeamAssignment[]
+	 */
+	protected ArrayCollection $teamAssignments;
 
 	public function __construct()
 	{
 		$this->rosterAssignments = new ArrayCollection();
+		$this->homeGames = new ArrayCollection();
+		$this->awayGames = new ArrayCollection();
 	}
 
 	public function getId(): ?int
@@ -72,13 +93,16 @@ class Team implements TeamInterface
 		return $this;
 	}
 
+	/**
+	 * @return ArrayCollection|RosterAssignment[]
+	 */
 	public function getRosterAssignments()
 	{
 		return $this->rosterAssignments;
 	}
 
 	/**
-	 * @param RosterAssignment[] $rosterAssignments
+	 * @param ArrayCollection|RosterAssignment[] $rosterAssignments
 	 */
 	public function setRosterAssignments(iterable $rosterAssignments): self
 	{
@@ -97,6 +121,60 @@ class Team implements TeamInterface
 	public function removeRosterAssignment(RosterAssignment $rosterAssignment): self
 	{
 		$this->rosterAssignments->remove($rosterAssignment->getId());
+
+		return $this;
+	}
+
+	/**
+	 * @return ArrayCollection|Game[]
+	 */
+	public function getHomeGames()
+	{
+		return $this->homeGames;
+	}
+
+	/**
+	 * @param ArrayCollection|Game[] $homeGames
+	 */
+	public function setHomeGames(iterable $homeGames): self
+	{
+		$this->homeGames = $homeGames;
+
+		return $this;
+	}
+
+	/**
+	 * @return ArrayCollection|Game[]
+	 */
+	public function getAwayGames()
+	{
+		return $this->awayGames;
+	}
+
+	/**
+	 * @param ArrayCollection|Game[] $awayGames
+	 */
+	public function setAwayGames(iterable $awayGames): self
+	{
+		$this->awayGames = $awayGames;
+
+		return $this;
+	}
+
+	/**
+	 * @return ArrayCollection|TeamAssignment[]
+	 */
+	public function getTeamAssignments()
+	{
+		return $this->teamAssignments;
+	}
+
+	/**
+	 * @param ArrayCollection|TeamAssignment[] $teamAssignments
+	 */
+	public function setTeamAssignments(iterable $teamAssignments): self
+	{
+		$this->teamAssignments = $teamAssignments;
 
 		return $this;
 	}
