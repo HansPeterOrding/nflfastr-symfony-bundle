@@ -175,7 +175,7 @@ class ImportService
 				$record[PlayInterface::COLUMN_DRIVE]
 			));
 
-			$this->handlePlayDataRecordMessage($record);
+			$this->handlePlayDataRecordMessage($season, $record, $skipUpdates);
 
 			$this->progressBar->advance();
 		}
@@ -230,7 +230,7 @@ class ImportService
 		return $play;
 	}
 
-	private function handlePlayDataRecordMessage(array $record, bool $skipUpdates): ?ImportPlayRecordMessage
+	private function handlePlayDataRecordMessage(int $season, array $record, bool $skipUpdates): ?ImportPlayRecordMessage
 	{
 		try {
 			if ($skipUpdates && $this->playRepository->playExists($record)) {
