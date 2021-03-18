@@ -35,6 +35,9 @@ services:
   HansPeterOrding\NflFastrSymfonyBundle\Repository\TeamRepository: ~
   HansPeterOrding\NflFastrSymfonyBundle\Repository\PlayerRepository: ~
   HansPeterOrding\NflFastrSymfonyBundle\Repository\RosterAssignmentRepository: ~
+  HansPeterOrding\NflFastrSymfonyBundle\Repository\PlayRepository: ~
+  HansPeterOrding\NflFastrSymfonyBundle\Repository\GameRepository: ~
+  HansPeterOrding\NflFastrSymfonyBundle\Repository\DriveRepository: ~
 
   HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\PlayerConverterInterface:
     class: HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\PlayerConverter
@@ -44,3 +47,28 @@ services:
 
   HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\RosterAssignmentConverterInterface:
     class: HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\RosterAssignmentConverter
+
+  HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\GameConverterInterface:
+    class: HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\GameConverter
+
+  HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\DriveConverterInterface:
+    class: HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\DriveConverter
+
+  HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\FlagsConverterInterface:
+    class: HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\FlagsConverter
+
+  HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\ExpectedPointsConverterInterface:
+    class: HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\ExpectedPointsConverter
+
+  HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\WinProbabilitiesConverterInterface:
+    class: HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\WinProbabilitiesConverter
+
+  HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\PlayerAssignmentConverterInterface:
+    class: HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\PlayerAssignmentConverter
+
+  HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\TeamAssignmentConverterInterface:
+    class: HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\TeamAssignmentConverter
+
+  HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\PlayConverterInterface:
+    class: HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\PlayConverter
+

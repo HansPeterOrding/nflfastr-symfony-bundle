@@ -21,22 +21,22 @@ class Team implements TeamInterface
 	/**
 	 * @var ArrayCollection|RosterAssignment[]
 	 */
-	protected ArrayCollection $rosterAssignments;
+	protected iterable $rosterAssignments;
 
 	/**
 	 * @var ArrayCollection|Game[]
 	 */
-	protected ArrayCollection $homeGames;
+	protected iterable $homeGames;
 
 	/**
 	 * @var ArrayCollection|Game[]
 	 */
-	protected ArrayCollection $awayGames;
+	protected iterable $awayGames;
 
 	/**
 	 * @var ArrayCollection|TeamAssignment[]
 	 */
-	protected ArrayCollection $teamAssignments;
+	protected iterable $teamAssignments;
 
 	public function __construct()
 	{

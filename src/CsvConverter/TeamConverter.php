@@ -33,7 +33,7 @@ class TeamConverter extends AbstractCsvConverter implements TeamConverterInterfa
 
 		$team = $this->getOrCreateEntity($record);
 
-		$team->setAbbreviation($record[TeamInterface::COLUMN_TEAM_ABBREVIATION]);
+		$team->setAbbreviation(static::toString($record[TeamInterface::COLUMN_TEAM_ABBREVIATION]));
 
 		$teamName = constant("HansPeterOrding\NflFastrSymfonyBundle\Entity\TeamInterface::TEAM_TITLE_" . $team->getAbbreviation());
 		if ($teamName === null) {

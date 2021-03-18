@@ -65,15 +65,16 @@ class RosterAssignmentConverter extends AbstractCsvConverter implements RosterAs
 
 		$record[RosterAssignmentInterface::COLUMN_ROSTERASSIGNMENT_PLAYER] = $player->getId();
 
+		/** @var RosterAssignment $rosterAssignment */
 		$rosterAssignment = $this->getOrCreateEntity($record);
 
 		$rosterAssignment->setTeam($team);
 		$rosterAssignment->setPlayer($player);
 		
-		$rosterAssignment->setSeason((int)$record[RosterAssignmentInterface::COLUMN_ROSTERASSIGNMENT_SEASON]);
-		$rosterAssignment->setPosition($record[RosterAssignmentInterface::COLUMN_ROSTERASSIGNMENT_POSITION]);
-		$rosterAssignment->setDepthChartPosition($record[RosterAssignmentInterface::COLUMN_ROSTERASSIGNMENT_DEPTH_CHART_POSITION]);
-		$rosterAssignment->setJerseyNumber((int)$record[RosterAssignmentInterface::COLUMN_ROSTERASSIGNMENT_JERSEY_NUMBER]);
+		$rosterAssignment->setSeason(static::toInt($record[RosterAssignmentInterface::COLUMN_ROSTERASSIGNMENT_SEASON]));
+		$rosterAssignment->setPosition(static::toString($record[RosterAssignmentInterface::COLUMN_ROSTERASSIGNMENT_POSITION]));
+		$rosterAssignment->setDepthChartPosition(static::toString($record[RosterAssignmentInterface::COLUMN_ROSTERASSIGNMENT_DEPTH_CHART_POSITION]));
+		$rosterAssignment->setJerseyNumber(static::toInt($record[RosterAssignmentInterface::COLUMN_ROSTERASSIGNMENT_JERSEY_NUMBER]));
 		$rosterAssignment->setStatus(
 			static::$statusMappings[$record[RosterAssignmentInterface::COLUMN_ROSTERASSIGNMENT_STATUS]]
 		);

@@ -47,12 +47,12 @@ class Player implements PlayerInterface
 	/**
 	 * @var ArrayCollection|RosterAssignment[]
 	 */
-	protected ArrayCollection $rosterAssignments;
+	protected iterable $rosterAssignments;
 
 	/**
 	 * @var ArrayCollection|PlayerAssignment[]
 	 */
-	protected ArrayCollection $playerAssignments;
+	protected iterable $playerAssignments;
 
 	public function __construct()
 	{

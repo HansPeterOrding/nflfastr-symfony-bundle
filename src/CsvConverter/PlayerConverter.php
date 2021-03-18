@@ -28,8 +28,7 @@ class PlayerConverter extends AbstractCsvConverter implements PlayerConverterInt
 
 	public function __construct(
 		PlayerRepository $repository
-	)
-	{
+	) {
 		$this->repository = $repository;
 	}
 
@@ -42,9 +41,9 @@ class PlayerConverter extends AbstractCsvConverter implements PlayerConverterInt
 	{
 		$player = $this->getOrCreateEntity($record);
 
-		$player->setFirstName($record[PlayerInterface::COLUMN_PLAYER_FIRSTNAME]);
-		$player->setLastName($record[PlayerInterface::COLUMN_PLAYER_LASTNAME]);
-		$player->setBirthDate(static::buildBirthDate($record[PlayerInterface::COLUMN_PLAYER_BIRTHDATE]));
+		$player->setFirstName(static::toString($record[PlayerInterface::COLUMN_PLAYER_FIRSTNAME]));
+		$player->setLastName(static::toString($record[PlayerInterface::COLUMN_PLAYER_LASTNAME]));
+		$player->setBirthDate(static::toDate($record[PlayerInterface::COLUMN_PLAYER_BIRTHDATE]));
 
 		$player->setHeight(
 			$this->buildHeight($record[PlayerInterface::COLUMN_PLAYER_HEIGHT])
@@ -52,46 +51,20 @@ class PlayerConverter extends AbstractCsvConverter implements PlayerConverterInt
 		$player->setWeight(
 			$this->buildWeight($record[PlayerInterface::COLUMN_PLAYER_WEIGHT])
 		);
-		$player->setCollege($record[PlayerInterface::COLUMN_PLAYER_COLLEGE]);
-		$player->setHighSchool($record[PlayerInterface::COLUMN_PLAYER_HIGHSCHOOL]);
+		$player->setCollege(static::toString($record[PlayerInterface::COLUMN_PLAYER_COLLEGE]));
+		$player->setHighSchool(static::toString($record[PlayerInterface::COLUMN_PLAYER_HIGHSCHOOL]));
 
-		if ($record[PlayerInterface::COLUMN_PLAYER_GSIS_ID] !== CsvConverterInterface::FIELD_VALUE_NOT_AVAILABLE) {
-			$player->setGsisId($record[PlayerInterface::COLUMN_PLAYER_GSIS_ID]);
-		}
-		if ($record[PlayerInterface::COLUMN_PLAYER_ESPN_ID] !== CsvConverterInterface::FIELD_VALUE_NOT_AVAILABLE) {
-			$player->setEspnId($record[PlayerInterface::COLUMN_PLAYER_ESPN_ID]);
-		}
-		if ($record[PlayerInterface::COLUMN_PLAYER_SPORTRADAR_ID] !== CsvConverterInterface::FIELD_VALUE_NOT_AVAILABLE) {
-			$player->setSportradarId($record[PlayerInterface::COLUMN_PLAYER_SPORTRADAR_ID]);
-		}
-		if ($record[PlayerInterface::COLUMN_PLAYER_YAHOO_ID] !== CsvConverterInterface::FIELD_VALUE_NOT_AVAILABLE) {
-			$player->setYahooId($record[PlayerInterface::COLUMN_PLAYER_YAHOO_ID]);
-		}
-		if ($record[PlayerInterface::COLUMN_PLAYER_ROTOWIRE_ID] !== CsvConverterInterface::FIELD_VALUE_NOT_AVAILABLE) {
-			$player->setRotowireId($record[PlayerInterface::COLUMN_PLAYER_ROTOWIRE_ID]);
-		}
+		$player->setGsisId(static::toString($record[PlayerInterface::COLUMN_PLAYER_GSIS_ID]));
+		$player->setEspnId(static::toString($record[PlayerInterface::COLUMN_PLAYER_ESPN_ID]));
+		$player->setSportradarId(static::toString($record[PlayerInterface::COLUMN_PLAYER_SPORTRADAR_ID]));
+		$player->setYahooId(static::toString($record[PlayerInterface::COLUMN_PLAYER_YAHOO_ID]));
+		$player->setRotowireId(static::toString($record[PlayerInterface::COLUMN_PLAYER_ROTOWIRE_ID]));
 
-		$player->setHeadshotUrl($record[PlayerInterface::COLUMN_PLAYER_HEADSHOT_URL]);
+		$player->setHeadshotUrl(static::toString($record[PlayerInterface::COLUMN_PLAYER_HEADSHOT_URL]));
 
 		return $player;
 	}
-
-	public static function buildBirthDate(string $birthDateString): ?DateTimeImmutable
-	{
-		if ($birthDateString === CsvConverterInterface::FIELD_VALUE_NOT_AVAILABLE) {
-			return null;
-		}
-
-		foreach (static::$birthDateSourceFormats as $birthDateSourceFormat) {
-			$birthDate = DateTimeImmutable::createFromFormat($birthDateSourceFormat, $birthDateString);
-			if ($birthDate) {
-				return $birthDate;
-			}
-		}
-
-		return null;
-	}
-
+	
 	private function buildHeight(string $heightString): ?Height
 	{
 		$result = null;
