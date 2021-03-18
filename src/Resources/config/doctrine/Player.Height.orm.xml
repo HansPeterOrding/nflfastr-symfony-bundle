@@ -1,0 +1,12 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                    http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <embeddable name="HansPeterOrding\NflFastrSymfonyBundle\Entity\Player\Height">
+        <field name="feet" type="integer" nullable="true" />
+        <field name="inches" type="integer" nullable="true" />
+        <field name="cm" type="integer" nullable="true" />
+    </embeddable>
+
+</doctrine-mapping>

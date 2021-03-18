@@ -16,13 +16,14 @@ use HansPeterOrding\NflFastrSymfonyBundle\Entity\GameInterface;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Player\RosterAssignment;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\PlayerInterface;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\TeamInterface;
-use HansPeterOrding\NflFastrSymfonyBundle\Message\ImportPlayRecordMessage;
+use HansPeterOrding\NflFastrSymfonyBundle\Message\PlayByPlayImport\ImportPlayRecordMessage;
 use HansPeterOrding\NflFastrSymfonyBundle\Repository\GameRepository;
 use HansPeterOrding\NflFastrSymfonyBundle\Repository\PlayRepository;
 use HansPeterOrding\NflFastrSymfonyBundle\Repository\TeamRepository;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 class ImportService
 {
@@ -38,6 +39,8 @@ class ImportService
 
 	private PlayRepository $playRepository;
 
+	private MessageBusInterface $messageBus;
+
 	private InputInterface $input;
 
 	private OutputInterface $output;
@@ -52,7 +55,8 @@ class ImportService
 		RosterAssignmentConverterInterface $rosterAssignmentConverter,
 		PlayConverterInterface $playConverter,
 		TeamRepository $teamRepository,
-		PlayRepository $playRepository
+		PlayRepository $playRepository,
+		MessageBusInterface $messageBus
 	) {
 		$this->resourceHandlerService = $resourceHandlerService;
 		$this->entityManager = $entityManager;
@@ -60,6 +64,7 @@ class ImportService
 		$this->playConverter = $playConverter;
 		$this->teamRepository = $teamRepository;
 		$this->playRepository = $playRepository;
+		$this->messageBus = $messageBus;
 	}
 
 	public function setOutput(OutputInterface $output): self
@@ -131,13 +136,13 @@ class ImportService
 			));
 
 			$play = $this->handlePlayDataRecord($record, $skipUpdates);
-			if($play) {
+			if ($play) {
 				$counter++;
 			}
 
 			$this->progressBar->advance();
 
-			if($limit && $counter >= $limit) {
+			if ($limit && $counter >= $limit) {
 				$finishedMessage = sprintf('Import for season %s aborted after limit of %s plays', $season, $limit);
 				break;
 			}
@@ -150,8 +155,8 @@ class ImportService
 
 		return $counter;
 	}
-	
-	public function initializePlayByPlaySeason(int $season)
+
+	public function initializePlayByPlaySeason(int $season, bool $skipUpdates)
 	{
 		$this->output->writeln(sprintf('<info>Starting initialization of season %s</info>', $season));
 
@@ -169,11 +174,8 @@ class ImportService
 				$record[GameInterface::COLUMN_GAME_ID],
 				$record[PlayInterface::COLUMN_DRIVE]
 			));
-			
-			$importPlayRecordMessage = new ImportPlayRecordMessage();
-			$importPlayRecordMessage->setSeason($season);
-			$importPlayRecordMessage->setCreated(new DateTime());
-			$importPlayRecordMessage->setRecord($record);
+
+			$this->handlePlayDataRecordMessage($record);
 
 			$this->progressBar->advance();
 		}
@@ -182,8 +184,6 @@ class ImportService
 		$this->progressBar->finish();
 
 		$this->entityManager->clear();
-
-		return $counter;
 	}
 
 	private function deactivateAllTeams()
@@ -206,11 +206,12 @@ class ImportService
 	private function handlePlayDataRecord(array $record, bool $skipUpdates): ?Play
 	{
 		try {
-			if($skipUpdates && $this->playRepository->playExists($record)) {
+			if ($skipUpdates && $this->playRepository->playExists($record)) {
 				$this->progressBar->setMessage(sprintf(
 					'Skipping play ID %s',
 					$record[PlayInterface::COLUMN_PLAY_ID]
 				));
+
 				return null;
 			}
 
@@ -227,6 +228,33 @@ class ImportService
 		}
 
 		return $play;
+	}
+
+	private function handlePlayDataRecordMessage(array $record, bool $skipUpdates): ?ImportPlayRecordMessage
+	{
+		try {
+			if ($skipUpdates && $this->playRepository->playExists($record)) {
+				$this->progressBar->setMessage(sprintf(
+					'Skipping play ID %s',
+					$record[PlayInterface::COLUMN_PLAY_ID]
+				));
+
+				return null;
+			}
+
+			$importPlayRecordMessage = new ImportPlayRecordMessage();
+			$importPlayRecordMessage->setSeason($season);
+			$importPlayRecordMessage->setCreated(new DateTime());
+			$importPlayRecordMessage->setRecord($record);
+
+			$this->messageBus->dispatch($importPlayRecordMessage);
+
+			return $importPlayRecordMessage;
+		} catch (\Throwable $e) {
+			dump($e);
+			dump($record);
+			die();
+		}
 	}
 
 	private function initProgressBar(int $max)

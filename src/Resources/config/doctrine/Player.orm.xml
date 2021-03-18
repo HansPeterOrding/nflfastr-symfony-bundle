@@ -1,0 +1,58 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                    http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="HansPeterOrding\NflFastrSymfonyBundle\Entity\Player" table="player">
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="updateLastUpdated"/>
+            <lifecycle-callback type="preUpdate" method="updateLastUpdated"/>
+        </lifecycle-callbacks>
+
+        <id name="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="firstName" type="string" length="255"/>
+        <field name="lastName" type="string" length="255"/>
+        <field name="birthDate" type="date_immutable" nullable="true"/>
+        <field name="college" type="string" length="255"/>
+        <field name="highSchool" type="string" length="255"/>
+        <field name="gsisId" type="string" length="255" nullable="true"/>
+        <field name="espnId" type="string" length="255" nullable="true"/>
+        <field name="sportradarId" type="string" length="255" nullable="true"/>
+        <field name="yahooId" type="string" length="255" nullable="true"/>
+        <field name="rotowireId" type="string" length="255" nullable="true"/>
+        <field name="headshotUrl" type="string" length="255"/>
+        <field name="lastUpdated" type="datetime"/>
+
+        <embedded
+                name="height"
+                class="HansPeterOrding\NflFastrSymfonyBundle\Entity\Player\Height"
+                column-prefix="height_"/>
+
+        <embedded
+                name="weight"
+                class="HansPeterOrding\NflFastrSymfonyBundle\Entity\Player\Weight"
+                column-prefix="weight_"/>
+
+        <one-to-many
+                field="rosterAssignments"
+                target-entity="HansPeterOrding\NflFastrSymfonyBundle\Entity\Player\RosterAssignment"
+                mapped-by="player">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many
+                field="playerAssignments"
+                target-entity="HansPeterOrding\NflFastrSymfonyBundle\Entity\Game\Play\PlayerAssignment"
+                mapped-by="player">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-many>
+    </entity>
+
+</doctrine-mapping>

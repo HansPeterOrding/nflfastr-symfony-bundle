@@ -1,0 +1,48 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                    http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="HansPeterOrding\NflFastrSymfonyBundle\Entity\Game\Drive" table="drive">
+        <id name="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="number" type="integer"/>
+        <field name="realStartTime" type="time" nullable="true"/>
+        <field name="playCount" type="integer" nullable="true"/>
+        <field name="timeOfPosession" type="time" nullable="true"/>
+        <field name="firstDowns" type="integer" nullable="true"/>
+        <field name="insideTwenty" type="boolean" nullable="true"/>
+        <field name="endedWithScore" type="boolean" nullable="true"/>
+        <field name="quarterStart" type="integer" nullable="true"/>
+        <field name="quarterEnd" type="integer" nullable="true"/>
+        <field name="yardsPenalized" type="integer" nullable="true"/>
+        <field name="startTransition" type="string" nullable="true"/>
+        <field name="endTransition" type="string" nullable="true"/>
+        <field name="gameClockStart" type="time" nullable="true"/>
+        <field name="gameClockEnd" type="time" nullable="true"/>
+        <field name="startYardLine" type="string" length="30" nullable="true"/>
+        <field name="endYardLine" type="string" length="30" nullable="true"/>
+
+        <many-to-one
+                field="game"
+                target-entity="HansPeterOrding\NflFastrSymfonyBundle\Entity\Game"
+                inversed-by="drives">
+            <join-column name="game_id" referenced-column-name="id"/>
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </many-to-one>
+
+        <one-to-many
+                field="plays"
+                target-entity="HansPeterOrding\NflFastrSymfonyBundle\Entity\Game\Play"
+                mapped-by="drive">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-many>
+    </entity>
+
+</doctrine-mapping>

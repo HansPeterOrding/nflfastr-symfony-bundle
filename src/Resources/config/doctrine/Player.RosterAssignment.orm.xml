@@ -1,0 +1,44 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                    http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="HansPeterOrding\NflFastrSymfonyBundle\Entity\Player\RosterAssignment" table="roster_assignment">
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="updateLastUpdated"/>
+            <lifecycle-callback type="preUpdate" method="updateLastUpdated"/>
+        </lifecycle-callbacks>
+
+        <id name="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="season" type="integer"/>
+        <field name="position" type="string" length="255"/>
+        <field name="depthChartPosition" type="string" length="255"/>
+        <field name="jerseyNumber" type="integer"/>
+        <field name="status" type="string" length="255"/>
+        <field name="lastUpdated" type="datetime"/>
+
+        <many-to-one
+                field="team"
+                target-entity="HansPeterOrding\NflFastrSymfonyBundle\Entity\Team"
+                inversed-by="rosterAssignments">
+            <join-column name="team_id" referenced-column-name="id"/>
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </many-to-one>
+
+        <many-to-one
+                field="player"
+                target-entity="HansPeterOrding\NflFastrSymfonyBundle\Entity\Player"
+                inversed-by="rosterAssignments">
+            <join-column name="player_id" referenced-column-name="id"/>
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </many-to-one>
+    </entity>
+
+</doctrine-mapping>

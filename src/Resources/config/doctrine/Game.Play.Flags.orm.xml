@@ -1,0 +1,66 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                    http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <embeddable name="HansPeterOrding\NflFastrSymfonyBundle\Entity\Game\Play\Flags">
+        <field name="shotgun" type="boolean"/>
+        <field name="noHuddle" type="boolean"/>
+        <field name="qbDropback" type="boolean"/>
+        <field name="qbKneel" type="boolean"/>
+        <field name="qbSpike" type="boolean"/>
+        <field name="qbScramble" type="boolean"/>
+        <field name="puntBlocked" type="boolean"/>
+        <field name="firstDownRush" type="boolean"/>
+        <field name="firstDownPass" type="boolean"/>
+        <field name="firstDownPenalty" type="boolean"/>
+        <field name="thirdDownConverted" type="boolean"/>
+        <field name="thirdDownFailed" type="boolean"/>
+        <field name="fourthDownConverted" type="boolean"/>
+        <field name="fourthDownFailed" type="boolean"/>
+        <field name="incompletePass" type="boolean"/>
+        <field name="touchback" type="boolean"/>
+        <field name="interception" type="boolean"/>
+        <field name="puntInsideTwenty" type="boolean"/>
+        <field name="puntInEndzone" type="boolean"/>
+        <field name="puntOutOfBounds" type="boolean"/>
+        <field name="puntDowned" type="boolean"/>
+        <field name="puntFairCatch" type="boolean"/>
+        <field name="kickoffInsideTwenty" type="boolean"/>
+        <field name="kickoffInEndzone" type="boolean"/>
+        <field name="kickoffOutOfBounds" type="boolean"/>
+        <field name="kickoffDowned" type="boolean"/>
+        <field name="kickoffFairCatch" type="boolean"/>
+        <field name="fumbleForced" type="boolean"/>
+        <field name="fumbleNotForced" type="boolean"/>
+        <field name="fumbleOutOfBounds" type="boolean"/>
+        <field name="soloTackle" type="boolean"/>
+        <field name="safety" type="boolean"/>
+        <field name="penalty" type="boolean"/>
+        <field name="tackledForLoss" type="boolean"/>
+        <field name="fumbleLost" type="boolean"/>
+        <field name="ownKickoffRecovery" type="boolean"/>
+        <field name="ownKickoffRecoveryTd" type="boolean"/>
+        <field name="qbHit" type="boolean"/>
+        <field name="rushAttempt" type="boolean"/>
+        <field name="passAttempt" type="boolean"/>
+        <field name="sack" type="boolean"/>
+        <field name="touchdown" type="boolean"/>
+        <field name="passTouchdown" type="boolean"/>
+        <field name="rushTouchdown" type="boolean"/>
+        <field name="returnTouchdown" type="boolean"/>
+        <field name="extraPointAttempt" type="boolean"/>
+        <field name="twoPointAttempt" type="boolean"/>
+        <field name="fieldGoalAttempt" type="boolean"/>
+        <field name="kickoffAttempt" type="boolean"/>
+        <field name="puntAttempt" type="boolean"/>
+        <field name="fumble" type="boolean"/>
+        <field name="completePass" type="boolean"/>
+        <field name="assistTackle" type="boolean"/>
+        <field name="lateralReception" type="boolean"/>
+        <field name="lateralRush" type="boolean"/>
+        <field name="lateralReturn" type="boolean"/>
+        <field name="lateralRecovery" type="boolean"/>
+    </embeddable>
+
+</doctrine-mapping>

@@ -1,0 +1,32 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                    http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="HansPeterOrding\NflFastrSymfonyBundle\Entity\Game\Play\ExpectedPoints" table="expected_points">
+        <id name="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="points" type="decimal" precision="30" scale="20"/>
+        <field name="teamType" type="string" length="30" nullable="true"/>
+        <field name="added" type="boolean"/>
+        <field name="type" type="string" length="30" nullable="true"/>
+        <field name="airOrYac" type="string" length="30" nullable="true"/>
+
+        <many-to-one
+                field="play"
+                target-entity="HansPeterOrding\NflFastrSymfonyBundle\Entity\Game\Play"
+                inversed-by="expectedPoints">
+            <join-column name="play_id" referenced-column-name="id"/>
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </many-to-one>
+
+        <unique-constraints>
+            <unique-constraint columns="play_id,team_type,added,type,air_or_yac" name="unique_expected_points"/>
+        </unique-constraints>
+    </entity>
+
+</doctrine-mapping>

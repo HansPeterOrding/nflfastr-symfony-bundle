@@ -1,0 +1,52 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                    http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="HansPeterOrding\NflFastrSymfonyBundle\Entity\Team" table="team">
+        <id name="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="abbreviation" type="string" length="3"/>
+        <field name="name" type="string" length="255" nullable="true"/>
+        <field name="status" type="string" length="30"/>
+
+        <one-to-many
+                field="rosterAssignments"
+                target-entity="HansPeterOrding\NflFastrSymfonyBundle\Entity\Player\RosterAssignment"
+                mapped-by="team">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many
+                field="homeGames"
+                target-entity="HansPeterOrding\NflFastrSymfonyBundle\Entity\Game"
+                mapped-by="teamHome">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many
+                field="awayGames"
+                target-entity="HansPeterOrding\NflFastrSymfonyBundle\Entity\Game"
+                mapped-by="teamAway">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many
+                field="teamAssignments"
+                target-entity="HansPeterOrding\NflFastrSymfonyBundle\Entity\Game\Play\TeamAssignment"
+                mapped-by="team">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-many>
+    </entity>
+
+</doctrine-mapping>

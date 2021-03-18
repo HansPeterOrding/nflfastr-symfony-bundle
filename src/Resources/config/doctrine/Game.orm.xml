@@ -1,0 +1,58 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                    http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="HansPeterOrding\NflFastrSymfonyBundle\Entity\Game" table="game">
+        <id name="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="gameId" type="string" length="30"/>
+        <field name="oldGameId" type="string" length="30"/>
+        <field name="seasonType" type="string" length="30"/>
+        <field name="week" type="integer"/>
+        <field name="datetime" type="datetime"/>
+        <field name="totalScoreHomeTeam" type="integer"/>
+        <field name="totalScoreAwayTeam" type="integer"/>
+
+        <many-to-one
+                field="teamHome"
+                target-entity="HansPeterOrding\NflFastrSymfonyBundle\Entity\Team"
+                inversed-by="homeGames">
+            <join-column name="team_id_home" referenced-column-name="id"/>
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </many-to-one>
+
+        <many-to-one
+                field="teamAway"
+                target-entity="HansPeterOrding\NflFastrSymfonyBundle\Entity\Team"
+                inversed-by="awayGames">
+            <join-column name="team_id_away" referenced-column-name="id"/>
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </many-to-one>
+
+        <one-to-many
+                field="plays"
+                target-entity="HansPeterOrding\NflFastrSymfonyBundle\Entity\Game\Play"
+                mapped-by="game">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many
+                field="drives"
+                target-entity="HansPeterOrding\NflFastrSymfonyBundle\Entity\Game\Drive"
+                mapped-by="game">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-many>
+    </entity>
+
+</doctrine-mapping>
