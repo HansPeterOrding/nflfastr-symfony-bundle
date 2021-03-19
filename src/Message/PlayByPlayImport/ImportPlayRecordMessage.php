@@ -14,6 +14,8 @@ class ImportPlayRecordMessage
 
 	protected array $record;
 
+	protected bool $skipUpdates = false;
+
 	public function getCreated(): DateTime
 	{
 		return $this->created;
@@ -46,6 +48,18 @@ class ImportPlayRecordMessage
 	public function setRecord(array $record): self
 	{
 		$this->record = $record;
+
+		return $this;
+	}
+
+	public function isSkipUpdates(): bool
+	{
+		return $this->skipUpdates;
+	}
+
+	public function setSkipUpdates(bool $skipUpdates): self
+	{
+		$this->skipUpdates = $skipUpdates;
 
 		return $this;
 	}

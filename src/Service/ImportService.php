@@ -169,7 +169,7 @@ class ImportService
 
 		foreach ($records as $record) {
 			$this->progressBar->setMessage(sprintf(
-				'Creeating import message for play ID %s from game ID %s in drive %s',
+				'Creating import message for play ID %s from game ID %s in drive %s',
 				$record[PlayInterface::COLUMN_PLAY_ID],
 				$record[GameInterface::COLUMN_GAME_ID],
 				$record[PlayInterface::COLUMN_DRIVE]
@@ -203,7 +203,7 @@ class ImportService
 		return $rosterAssignment;
 	}
 
-	private function handlePlayDataRecord(array $record, bool $skipUpdates): ?Play
+	public function handlePlayDataRecord(array $record, bool $skipUpdates): ?Play
 	{
 		try {
 			if ($skipUpdates && $this->playRepository->playExists($record)) {
@@ -246,6 +246,7 @@ class ImportService
 			$importPlayRecordMessage->setSeason($season);
 			$importPlayRecordMessage->setCreated(new DateTime());
 			$importPlayRecordMessage->setRecord($record);
+			$importPlayRecordMessage->setSeason($skipUpdates);
 
 			$this->messageBus->dispatch($importPlayRecordMessage);
 

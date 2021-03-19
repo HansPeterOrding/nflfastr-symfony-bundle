@@ -39,6 +39,11 @@ services:
     arguments:
       $importService: '@nfl_fastr_symfony.import_service'
 
+  nfl_fastr_symfony.play_record_message_handler:
+    class: HansPeterOrding\NflFastrSymfonyBundle\MessageHandler\PlayByPlayImport\ImportPlayRecordMessageHandler
+    arguments:
+      $importService: '@nfl_fastr_symfony.import_service'
+
   HansPeterOrding\NflFastrSymfonyBundle\Repository\TeamRepository: ~
   HansPeterOrding\NflFastrSymfonyBundle\Repository\PlayerRepository: ~
   HansPeterOrding\NflFastrSymfonyBundle\Repository\RosterAssignmentRepository: ~
