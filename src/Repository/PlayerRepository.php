@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace HansPeterOrding\NflFastrSymfonyBundle\Repository;
 
+use DateTimeImmutable;
 use Doctrine\Persistence\ManagerRegistry;
-use HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\PlayerConverter;
+use HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\AbstractCsvConverter;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Player;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\PlayerInterface;
 
@@ -58,11 +59,11 @@ class PlayerRepository extends AbstractNflRepository implements NflRepositoryInt
 		$player = parent::findUniqueEntity($data);
 
 		if (!$player) {
-			$birthdate = PlayerConverter::buildBirthDate($data[PlayerInterface::COLUMN_PLAYER_BIRTHDATE]);
+			$birthdate = AbstractCsvConverter::toDate($data[PlayerInterface::COLUMN_PLAYER_BIRTHDATE]);
 			$player = $this->findOneBy([
 				self::FIELD_FIRSTNAME => $data[PlayerInterface::COLUMN_PLAYER_FIRSTNAME],
 				self::FIELD_LASTNAME  => $data[PlayerInterface::COLUMN_PLAYER_LASTNAME],
-				self::FIELD_BIRTHDATE => $birthdate
+				self::FIELD_BIRTHDATE => $birthdate?DateTimeImmutable::createFromMutable($birthdate):null
 			]);
 		}
 

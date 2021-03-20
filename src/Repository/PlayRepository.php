@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace HansPeterOrding\NflFastrSymfonyBundle\Repository;
 
 use Doctrine\Persistence\ManagerRegistry;
+use HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\AbstractCsvConverter;
+use HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\CsvConverterInterface;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Game;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Game\DriveInterface;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Game\Play;
@@ -63,7 +65,7 @@ class PlayRepository extends AbstractNflRepository implements NflRepositoryInter
 			)
 			->setParameter('gameId', $data[GameInterface::COLUMN_GAME_ID])
 			->setParameter('playId', $data[PlayInterface::COLUMN_PLAY_ID])
-			->setParameter('number', $data[DriveInterface::COLUMN_DRIVE]);
+			->setParameter('number', AbstractCsvConverter::toInt($data[DriveInterface::COLUMN_DRIVE]));
 
 		$play = $qb->getQuery()->getOneOrNullResult();
 		if($play) {

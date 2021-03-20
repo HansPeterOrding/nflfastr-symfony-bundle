@@ -67,7 +67,7 @@ abstract class AbstractCsvConverter implements CsvConverterInterface
 		return (string)$value;
 	}
 
-	protected static function toInt(string $value, $nullable = true): ?int
+	public static function toInt(string $value, $nullable = true): ?int
 	{
 		if ($value === CsvConverterInterface::FIELD_VALUE_NOT_AVAILABLE) {
 			return $nullable ? null : 0;
@@ -85,7 +85,7 @@ abstract class AbstractCsvConverter implements CsvConverterInterface
 		return floatval($value);
 	}
 
-	protected static function toDate(string $dateString): ?DateTime
+	public static function toDate(string $dateString): ?DateTime
 	{
 		if ($dateString === CsvConverterInterface::FIELD_VALUE_NOT_AVAILABLE) {
 			return null;

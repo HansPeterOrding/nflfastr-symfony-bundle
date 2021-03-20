@@ -14,10 +14,10 @@
         </id>
 
         <field name="season" type="integer"/>
-        <field name="position" type="string" length="255"/>
-        <field name="depthChartPosition" type="string" length="255"/>
-        <field name="jerseyNumber" type="integer"/>
-        <field name="status" type="string" length="255"/>
+        <field name="position" type="string" length="255" nullable="true"/>
+        <field name="depthChartPosition" type="string" length="255" nullable="true"/>
+        <field name="jerseyNumber" type="integer" nullable="true"/>
+        <field name="status" type="string" length="255" nullable="true"/>
         <field name="lastUpdated" type="datetime"/>
 
         <many-to-one

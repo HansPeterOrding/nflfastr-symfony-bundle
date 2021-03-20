@@ -246,7 +246,7 @@ class ImportService
 			$importPlayRecordMessage->setSeason($season);
 			$importPlayRecordMessage->setCreated(new DateTime());
 			$importPlayRecordMessage->setRecord($record);
-			$importPlayRecordMessage->setSeason($skipUpdates);
+			$importPlayRecordMessage->setSkipUpdates($skipUpdates);
 
 			$this->messageBus->dispatch($importPlayRecordMessage);
 
