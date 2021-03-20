@@ -9,7 +9,7 @@
         </id>
 
         <field name="playId" type="string" length="30"/>
-        <field name="possessionTeamSideOfField" type="string" length="30"/>
+        <field name="possessionTeamSideOfField" type="string" length="30" nullable="true"/>
         <field name="yardLine100" type="integer" nullable="true"/>
         <field name="secondsRemainingQuarter" type="integer" nullable="true"/>
         <field name="secondsRemainingHalf" type="integer" nullable="true"/>
