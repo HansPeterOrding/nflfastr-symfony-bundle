@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HansPeterOrding\NflFastrSymfonyBundle\Repository;
 
 use Doctrine\Persistence\ManagerRegistry;
+use HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\AbstractCsvConverter;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Game\Drive;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Game\DriveInterface;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Game\PlayInterface;
@@ -28,7 +29,7 @@ class DriveRepository extends AbstractNflRepository implements NflRepositoryInte
 	{
 		return $this->findOneBy([
 			self::FIELD_GAME => $data[PlayInterface::COLUMN_GAME_ID],
-			self::FIELD_NUMBER => $data[DriveInterface::COLUMN_DRIVE]
+			self::FIELD_NUMBER => AbstractCsvConverter::toInt($data[DriveInterface::COLUMN_DRIVE])
 		]);
 	}
 }

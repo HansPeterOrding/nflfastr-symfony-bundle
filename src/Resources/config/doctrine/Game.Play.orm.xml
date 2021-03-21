@@ -22,7 +22,7 @@
         <field name="goalToGo" type="boolean"/>
         <field name="time" type="datetime" nullable="true"/>
         <field name="yardsToGo" type="integer"/>
-        <field name="yardsNet" type="integer"/>
+        <field name="yardsNet" type="integer" nullable="true"/>
         <field name="description" type="text"/>
         <field name="type" type="string" length="30" nullable="true"/>
         <field name="yardsGained" type="integer"/>

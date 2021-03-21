@@ -153,9 +153,9 @@ abstract class AbstractCsvConverter implements CsvConverterInterface
 		}
 
 		$date->setTime(
-			$time->format('H'),
-			$time->format('m'),
-			$time->format('s'),
+			(int)$time->format('G'),
+			(int)$time->format('m'),
+			(int)$time->format('s'),
 			0
 		);
 

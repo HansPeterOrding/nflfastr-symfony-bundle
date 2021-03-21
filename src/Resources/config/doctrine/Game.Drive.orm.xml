@@ -8,7 +8,7 @@
             <generator strategy="AUTO"/>
         </id>
 
-        <field name="number" type="integer"/>
+        <field name="number" type="integer" nullable="true"/>
         <field name="realStartTime" type="time" nullable="true"/>
         <field name="playCount" type="integer" nullable="true"/>
         <field name="timeOfPosession" type="time" nullable="true"/>

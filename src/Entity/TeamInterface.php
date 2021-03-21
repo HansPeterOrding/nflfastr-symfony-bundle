@@ -48,5 +48,5 @@ interface TeamInterface
 	public const TEAM_TITLE_TB = 'Tampa Bay Buccaneers';
 	public const TEAM_TITLE_TEN = 'Tennessee Titans';
 	public const TEAM_TITLE_WAS = 'Washington Football Team';
-	public const TEAM_TITLE_NA = 'None';
+	public const TEAM_TITLE_ = 'None';
 }
