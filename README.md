@@ -17,21 +17,41 @@ Bundle contains:
 * Repositories
 * Import commands
 
+Documentation
+-------------
+
+Documentation for NflFastRSymfonyBundle is in [`doc/index.md`](doc/index.md)
+
+Installation
+------------
+
+Installation instructions can be found in the [documentation](doc/setup.md)
+
+Versions & Dependencies
+-----------------------
+
+Version 0.1 of the NflFastRSymfonyBundle is compatible with NflFastR 4. It requires Symfony 5.0 or greater. When using
+Symfony Flex there is also a [recipe to ease the setup](https://github.com/symfony/recipes-contrib/tree/master/hans-peter-ording/nflfastr-symfony-bundle/0.1).
+Earlier versions of the NflFastRSymfonyBundle are not maintained anymore and only work with older versions of the dependencies.
+The following table shows the compatibilities of different versions of the bundle.
+
+| FOSElasticaBundle                                                                       | NflFastR | Symfony    | PHP   |
+| --------------------------------------------------------------------------------------- | ---------| ---------- | ----- |
+| [0.1] (master)                                                                          | ^4.0     | ^5.0       | >=7.4 |
+
+License
+-------
+
+This bundle is released under the MIT license. See the included [LICENSE](LICENSE) file for more information.
+
+
+
+
 ___
 
 @todo: move this to docs folder
 @todo: hooks and events?
 
-## Introduction
-
-What is this bundle about in terms of where should data come from, links to other sites
-
-## Installation and Configuration
-
-composer require
-run migrations
-configure yaml file
-...
 
 ## Entities
 
