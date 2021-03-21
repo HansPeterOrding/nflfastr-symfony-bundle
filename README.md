@@ -19,5 +19,39 @@ Bundle contains:
 
 ___
 
+@todo: move this to docs folder
+@todo: hooks and events?
 
+## Introduction
 
+What is this bundle about in terms of where should data come from, links to other sites
+
+## Installation and Configuration
+
+composer require
+run migrations
+configure yaml file
+...
+
+## Entities
+
+Why entities
+Structure in general (with storing complete data)
+Details on fieldmappings
+
+## Import strategies
+
+Console or direct
+Pros and cons
+For console:
+multiple workers in parallel
+timings
+Memory restrictions
+
+## Extending this bundle
+
+## Contribute / Community
+
+## Outlook
+
+Optimized indexes, hooks, events, ...
