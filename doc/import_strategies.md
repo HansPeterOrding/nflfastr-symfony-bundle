@@ -1,0 +1,9 @@
+- General (aggregating roster data to players and so on)
+- Using Messenger
+    - Explanation
+    - Up- and Downsides
+    - Timings
+- Using direct import
+    - Explanation
+    - Up- and Downsides
+    - Timings
