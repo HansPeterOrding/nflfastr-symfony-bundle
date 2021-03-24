@@ -20,7 +20,7 @@ interface WinProbabilitiesConverterInterface extends CsvConverterInterface
 	const COLUMN_TOTAL_HOME_RUSH_WPA = 'total_home_rush_wpa';
 	const COLUMN_TOTAL_AWAY_RUSH_WPA = 'total_away_rush_wpa';
 	const COLUMN_TOTAL_HOME_PASS_WPA = 'total_home_pass_wpa';
-	const COLUMN_TOTAL_WAY_PASS_WPA = 'total_away_pass_wpa';
+	const COLUMN_TOTAL_AWAY_PASS_WPA = 'total_away_pass_wpa';
 	const COLUMN_AIR_WPA = 'air_wpa';
 	const COLUMN_YAC_WPA = 'yac_wpa';
 	const COLUMN_COMP_AIR_WPA = 'comp_air_wpa';

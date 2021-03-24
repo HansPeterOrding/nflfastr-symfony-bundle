@@ -134,6 +134,7 @@ class WinProbabilitiesConverter extends AbstractCsvConverter implements WinProba
 			case WinProbabilitiesConverterInterface::COLUMN_AWAY_WP:
 			case WinProbabilitiesConverterInterface::COLUMN_AWAY_WP_POST:
 			case WinProbabilitiesConverterInterface::COLUMN_TOTAL_AWAY_RUSH_WPA:
+			case WinProbabilitiesConverterInterface::COLUMN_TOTAL_AWAY_PASS_WPA:
 			case WinProbabilitiesConverterInterface::COLUMN_TOTAL_AWAY_COMP_AIR_WPA:
 			case WinProbabilitiesConverterInterface::COLUMN_TOTAL_AWAY_COMP_YAC_WPA:
 			case WinProbabilitiesConverterInterface::COLUMN_TOTAL_AWAY_RAW_AIR_WPA:

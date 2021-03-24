@@ -11,6 +11,7 @@ This bundle has designed those entities based on the following goals:
 * Group belonging data where possible
 * Build associations (1:1, 1:n, m:n) where it makes sense and provides easier handling
 * Avoid putting data required for querying in subobjects where possible
+* Use adequate types for data (e.g. DateTime for all dates)
 
 Following these guidelines, the bundle provides data in a complex class structure:
 
