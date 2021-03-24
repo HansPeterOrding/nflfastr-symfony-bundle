@@ -33,6 +33,18 @@ This approach makes use of the symfony messenger components and requires two ste
 1. Create a message for each column of a processed CSV file
 2. Start a worker to actually import the data message wise
 
+#### Up- and downsides
+
+Upsides:
+* No need to take care of memory usage
+* Runs in background
+* Can be automated easily
+* Faster
+
+Downsides:
+* Asynchronous
+* Needs more setup effort
+
 #### Instructions to import
 
 To use the symfony messenger approach, you have to require the messenger bundle. Open a command console, enter your project directory and execute the
@@ -126,6 +138,18 @@ The [symfony docs](https://symfony.com/doc/current/messenger.html#supervisor-con
 ### Direct approach
 
 This approach tries to import all data at once. You only need to run one command and wait until everything is processed.
+
+#### Up- and downsides
+
+Upsides:
+* Results can be viewed while importing (not only in logs)
+* Synchronous
+* Easy to setup and use
+
+Downsides:
+* Extremely memory intensive
+* Automating is complicated/ not possible
+* Needs personal backing
 
 #### Instructions to import
 

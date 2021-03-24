@@ -17,6 +17,7 @@ use HansPeterOrding\NflFastrSymfonyBundle\Entity\Player\RosterAssignment;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\PlayerInterface;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\TeamInterface;
 use HansPeterOrding\NflFastrSymfonyBundle\Message\PlayByPlayImport\ImportPlayRecordMessage;
+use HansPeterOrding\NflFastrSymfonyBundle\Message\RosterImport\ImportRosterRecordMessage;
 use HansPeterOrding\NflFastrSymfonyBundle\Repository\GameRepository;
 use HansPeterOrding\NflFastrSymfonyBundle\Repository\PlayRepository;
 use HansPeterOrding\NflFastrSymfonyBundle\Repository\TeamRepository;
@@ -102,7 +103,7 @@ class ImportService
 				$record[TeamInterface::COLUMN_TEAM_ABBREVIATION]
 			));
 
-			$this->handleRosterDataRecord($record);
+			$this->handleRosterRecord($record);
 
 			$this->progressBar->advance();
 		}
@@ -135,7 +136,7 @@ class ImportService
 				$record[PlayInterface::COLUMN_DRIVE]
 			));
 
-			$play = $this->handlePlayDataRecord($record, $skipUpdates);
+			$play = $this->handlePlayRecord($record, $skipUpdates);
 			if ($play) {
 				$counter++;
 			}
@@ -175,7 +176,39 @@ class ImportService
 				$record[PlayInterface::COLUMN_DRIVE]
 			));
 
-			$this->handlePlayDataRecordMessage($season, $record, $skipUpdates);
+			$this->handlePlayRecordMessage($season, $record, $skipUpdates);
+
+			$this->progressBar->advance();
+		}
+
+		$this->progressBar->setMessage(sprintf('Initialization for season %s finished.', $season));
+		$this->progressBar->finish();
+
+		$this->entityManager->clear();
+	}
+
+	public function initializeRosterSeason(int $season)
+	{
+		$this->output->writeln(sprintf('<info>Starting initialization of season %s</info>', $season));
+
+		$fileInfo = $this->resourceHandlerService->buildRosterFileInfo($season);
+		$records = $this->resourceHandlerService->readCsvFromUrl($fileInfo);
+
+		if ($season === (int)(new DateTime())->format('Y')) {
+			$this->output->writeln('<info>Set all teams to inactive</info>');
+			$this->deactivateAllTeams();
+		}
+
+		$this->initProgressBar($this->resourceHandlerService->getFoundRows());
+
+		foreach ($records as $record) {
+			$this->progressBar->setMessage(sprintf(
+				'Creating import message for player %s for Team %s',
+				$record[PlayerInterface::COLUMN_PLAYER_FULLNAME],
+				$record[TeamInterface::COLUMN_TEAM_ABBREVIATION]
+			));
+
+			$this->handleRosterRecordMessage($record);
 
 			$this->progressBar->advance();
 		}
@@ -191,7 +224,7 @@ class ImportService
 		$this->teamRepository->deactivateAll();
 	}
 
-	private function handleRosterDataRecord(array $record): RosterAssignment
+	private function handleRosterRecord(array $record): RosterAssignment
 	{
 		$rosterAssignment = $this->rosterAssignmentConverter->toEntity($record);
 
@@ -203,50 +236,55 @@ class ImportService
 		return $rosterAssignment;
 	}
 
-	public function handlePlayDataRecord(array $record, bool $skipUpdates): ?Play
+	public function handlePlayRecord(array $record, bool $skipUpdates): ?Play
 	{
-		try {
-			if ($skipUpdates && $this->playRepository->playExists($record)) {
-				$this->progressBar->setMessage(sprintf(
-					'Skipping play ID %s',
-					$record[PlayInterface::COLUMN_PLAY_ID]
-				));
+		if ($skipUpdates && $this->playRepository->playExists($record)) {
+			$this->progressBar->setMessage(sprintf(
+				'Skipping play ID %s',
+				$record[PlayInterface::COLUMN_PLAY_ID]
+			));
 
-				return null;
-			}
-
-			$play = $this->playConverter->toEntity($record, $skipUpdates);
-
-			$this->entityManager->persist($play);
-			$this->entityManager->flush();
-
-			$this->entityManager->clear();
-		} catch (\Throwable $e) {
-			dump($e);
-			dump($record);
-			die();
+			return null;
 		}
+
+		$play = $this->playConverter->toEntity($record, $skipUpdates);
+
+		$this->entityManager->persist($play);
+		$this->entityManager->flush();
+
+		$this->entityManager->clear();
 
 		return $play;
 	}
 
-	private function handlePlayDataRecordMessage(int $season, array $record, bool $skipUpdates): ?ImportPlayRecordMessage
+	private function handlePlayRecordMessage(int $season, array $record, bool $skipUpdates): ?ImportPlayRecordMessage
+	{
+		if ($skipUpdates && $this->playRepository->playExists($record)) {
+			$this->progressBar->setMessage(sprintf(
+				'Skipping play ID %s',
+				$record[PlayInterface::COLUMN_PLAY_ID]
+			));
+
+			return null;
+		}
+
+		$importPlayRecordMessage = new ImportPlayRecordMessage();
+		$importPlayRecordMessage->setSeason($season);
+		$importPlayRecordMessage->setCreated(new DateTime());
+		$importPlayRecordMessage->setRecord($record);
+		$importPlayRecordMessage->setSkipUpdates($skipUpdates);
+
+		$this->messageBus->dispatch($importPlayRecordMessage);
+
+		return $importPlayRecordMessage;
+	}
+
+	private function handleRosterRecordMessage(array $record): ?ImportRosterRecordMessage
 	{
 		try {
-			if ($skipUpdates && $this->playRepository->playExists($record)) {
-				$this->progressBar->setMessage(sprintf(
-					'Skipping play ID %s',
-					$record[PlayInterface::COLUMN_PLAY_ID]
-				));
-
-				return null;
-			}
-
-			$importPlayRecordMessage = new ImportPlayRecordMessage();
-			$importPlayRecordMessage->setSeason($season);
+			$importPlayRecordMessage = new ImportRosterRecordMessage();
 			$importPlayRecordMessage->setCreated(new DateTime());
 			$importPlayRecordMessage->setRecord($record);
-			$importPlayRecordMessage->setSkipUpdates($skipUpdates);
 
 			$this->messageBus->dispatch($importPlayRecordMessage);
 

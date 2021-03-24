@@ -39,6 +39,13 @@ services:
     arguments:
       $importService: '@nfl_fastr_symfony.import_service'
 
+  nfl_fastr_symfony.initialize_roster_command:
+    class: HansPeterOrding\NflFastrSymfonyBundle\Command\ImportNflFastr\Messenger\InitializeRosterImportCommand
+    tags:
+      - { name: 'console.command' }
+    arguments:
+      $importService: '@nfl_fastr_symfony.import_service'
+
   nfl_fastr_symfony.play_record_message_handler:
     class: HansPeterOrding\NflFastrSymfonyBundle\MessageHandler\PlayByPlayImport\ImportPlayRecordMessageHandler
     arguments:

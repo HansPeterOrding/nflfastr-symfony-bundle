@@ -24,7 +24,7 @@ class WinProbabilitiesConverter extends AbstractCsvConverter implements WinProba
 		WinProbabilitiesConverterInterface::COLUMN_TOTAL_HOME_RUSH_WPA,
 		WinProbabilitiesConverterInterface::COLUMN_TOTAL_AWAY_RUSH_WPA,
 		WinProbabilitiesConverterInterface::COLUMN_TOTAL_HOME_PASS_WPA,
-		WinProbabilitiesConverterInterface::COLUMN_TOTAL_WAY_PASS_WPA,
+		WinProbabilitiesConverterInterface::COLUMN_TOTAL_AWAY_PASS_WPA,
 		WinProbabilitiesConverterInterface::COLUMN_AIR_WPA,
 		WinProbabilitiesConverterInterface::COLUMN_YAC_WPA,
 		WinProbabilitiesConverterInterface::COLUMN_COMP_AIR_WPA,
@@ -90,7 +90,7 @@ class WinProbabilitiesConverter extends AbstractCsvConverter implements WinProba
 			case WinProbabilitiesConverterInterface::COLUMN_TOTAL_AWAY_RUSH_WPA:
 				return WinProbabilityInterface::TYPE_RUSH;
 			case WinProbabilitiesConverterInterface::COLUMN_TOTAL_HOME_PASS_WPA:
-			case WinProbabilitiesConverterInterface::COLUMN_TOTAL_WAY_PASS_WPA:
+			case WinProbabilitiesConverterInterface::COLUMN_TOTAL_AWAY_PASS_WPA:
 				return WinProbabilityInterface::TYPE_PASS;
 			case WinProbabilitiesConverterInterface::COLUMN_HOME_WP_POST:
 			case WinProbabilitiesConverterInterface::COLUMN_AWAY_WP_POST:
