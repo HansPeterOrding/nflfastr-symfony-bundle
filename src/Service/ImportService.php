@@ -224,7 +224,7 @@ class ImportService
 		$this->teamRepository->deactivateAll();
 	}
 
-	private function handleRosterRecord(array $record): RosterAssignment
+	public function handleRosterRecord(array $record): RosterAssignment
 	{
 		$rosterAssignment = $this->rosterAssignmentConverter->toEntity($record);
 
