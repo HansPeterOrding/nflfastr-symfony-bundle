@@ -3,23 +3,23 @@ Import strategies
 
 Importing flat CSV data to multi dimendional entities required some aggregation. Starting with lines in the CSV files, the bundle creates two "main" entities that match exactly one line of the underlying CSV file:
 
-* RosterAssignment for nflfastR-roster CSVs
-* Play for nflfastR-data play by play data
+* `{RosterAssignment}` for nflfastR-roster CSVs
+* `{Play}` for nflfastR-data play by play data
 
 Based on the [entity structure](entities.md) the aggregations where logically derived and followed some basic rules:
 
 * Entities are always identified by a set of defining columns.
 > Example: Plays are defined by columns `play_id`, `game_id` and `drive`. If these columns have the same value combination, it is the same game.
 * Entities present in more than one line (e.g. Teams) are always updated if the defining columns match. In result, the entities contain the newest set of not defining properties.
-> Example: Games are defined by column `gameId`. All other fields of a game entity are set to the last imported column values.
+> Example: `{Game}` is defined by column `gameId`. All other fields of a `{Game}` entity are set to the last imported column values.
 * All properties are stored in an appropriate format. This applies to PHP objects and database entities.
-> Example: The game's start_time is converted to a DateTime object in PHP. It is stored in a time column in the database.
+> Example: The `{Game}`'s start_time is converted to a `{DateTime}` object in PHP. It is stored in a time column in the database.
 * Belonging columns are joined to one attribute if this makes the handling easier.
-> Example: Columns `game_date` and `start_time` are joined to one DateTime object resp. one datetime column in the database (Game.datetime).
+> Example: Columns `game_date` and `start_time` are joined to one `{DateTime}` object resp. one datetime column in the database (`{Game.datetime}`).
 * Columns that contain combined data are split into multiple attributes if this makes the handling easier or gives more flexibility.
 > Example: Column `height` is split into `feet` and `inches` to allow versatile displaying.
 * Columns that are regional are converted implicitly in necessary attributes
-> Example: Height and Weight contain metric units and imperial units (i.e. kilograms and pounds resp. centimeters and feet/inches)
+> Example: `{Height}` and `{Weight}` contain metric units and imperial units (i.e. kilograms and pounds resp. centimeters and feet/inches)
 
 ## Different approaches
 
@@ -93,7 +93,7 @@ following command to initialize the roster import:
 $ bin/console nflfastr-symfony:import:messenger:initialize-roster-import
 ```
 
-This will create one ImportRosterRecordMessage for every CSV row in the configured queue.
+This will create one `{ImportRosterRecordMessage}`  for every CSV row in the configured queue.
 
 For step two, you can now execute a worker to process all messages:
 
@@ -113,7 +113,7 @@ following command to initialize the roster import:
 $ bin/console nflfastr-symfony:import:messenger:initialize-play-import
 ```
 
-This will create one ImportPlayRecordMessage for every CSV row in the configured queue.
+This will create one `{ImportPlayRecordMessage}` for every CSV row in the configured queue.
 
 You can append the years to be imported, separated by spaces, to only import selected years:
 
@@ -123,7 +123,7 @@ $ bin/console nflfastr-symfony:import:messenger:initialize-play-import 2018 2019
 
 You can also pass options to manipulate the import behaviour:
 
-* --skip-updates: Pass this option to skip already imported plays. Otherwise imported plays will be updated with new data. 
+* `--skip-updates`: Pass this option to skip already imported plays. Otherwise imported plays will be updated with new data. 
   > This affects only the consumption of the messages. Nevertheless the command creates messages for every CSV row.
 
 For step two, you can now execute a worker to process all messages:
@@ -170,7 +170,7 @@ $ bin/console nflfastr-symfony:import:roster 2018 2019 2020
 
 You can also pass options to manipulate the import behaviour:
 
-* --interactive: If this option is set, you will be asked for inputs (e.g. team names). If not, default values will be used.
+* `--interactive`: If this option is set, you will be asked for inputs (e.g. team names). If not, default values will be used.
 
 > IMPORTANT: This command consumes a lot of memory, keep in mind, that it can possibly crash if you don't assign enough memory.
 
@@ -191,8 +191,8 @@ $ bin/console nflfastr-symfony:import:roster 2018 2019 2020
 
 You can also pass options to manipulate the import behaviour:
 
-* --skip-updates: Pass this option to skip already imported plays. Otherwise imported plays will be updated with new data.
-* --limit: Pass the number of plays to limit the run to. If you also set skip-updates, only updated plays count to the limit.
+* `--skip-updates`: Pass this option to skip already imported plays. Otherwise imported plays will be updated with new data.
+* `--limit`: Pass the number of plays to limit the run to. If you also set skip-updates, only updated plays count to the limit.
 
 > IMPORTANT: This command consumes a lot of memory, keep in mind, that it can possibly crash if you don't assign enough memory.
 
@@ -215,4 +215,4 @@ It serves just as an example to get a brief feeling of the numbers.
 * Importing one gameday takes about 3 minutes
 * Importing one season takes less than an hour
 
-I am very curious to hear about your settings and findings: [bjoern.may@gmail.com](bjoern.may@gmail.com).
+I am very curious to hear about your settings and findings: [bjoern.may@gmail.com](mailto:bjoern.may@gmail.com).

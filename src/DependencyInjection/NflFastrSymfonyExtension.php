@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace HansPeterOrding\NflFastrSymfonyBundle\DependencyInjection;
 
-use HansPeterOrding\NflFastrSymfonyBundle\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;

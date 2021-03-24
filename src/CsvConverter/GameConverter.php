@@ -20,16 +20,6 @@ class GameConverter extends AbstractCsvConverter implements GameConverterInterfa
 		'POST' => GameInterface::SEASON_TYPE_POSTSEASON
 	];
 
-	private static array $gameDateSourceFormats = [
-		'Y-m-d',
-		'm/d/Y'
-	];
-
-	private static array $gameTimeSourceFormats = [
-		'H:i',
-		'H:i:s'
-	];
-
 	private TeamConverterInterface $teamConverter;
 
 	public function __construct(

@@ -70,7 +70,7 @@ class RosterAssignmentConverter extends AbstractCsvConverter implements RosterAs
 
 		$rosterAssignment->setTeam($team);
 		$rosterAssignment->setPlayer($player);
-		
+
 		$rosterAssignment->setSeason(static::toInt($record[RosterAssignmentInterface::COLUMN_ROSTERASSIGNMENT_SEASON]));
 		$rosterAssignment->setPosition(static::toString($record[RosterAssignmentInterface::COLUMN_ROSTERASSIGNMENT_POSITION]));
 		$rosterAssignment->setDepthChartPosition(static::toString($record[RosterAssignmentInterface::COLUMN_ROSTERASSIGNMENT_DEPTH_CHART_POSITION]));

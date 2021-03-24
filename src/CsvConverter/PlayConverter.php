@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace HansPeterOrding\NflFastrSymfonyBundle\CsvConverter;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Game\Play;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Game\PlayInterface;
 use HansPeterOrding\NflFastrSymfonyBundle\Repository\PlayRepository;
@@ -12,34 +11,29 @@ use HansPeterOrding\NflFastrSymfonyBundle\Repository\PlayRepository;
 class PlayConverter extends AbstractCsvConverter implements PlayConverterInterface
 {
 	public static array $gameHalfMappings = [
-		'Half1' => PlayInterface::GAME_HALF_FIRST,
-		'Half2' => PlayInterface::GAME_HALF_SECOND,
-		'Overtime'  => PlayInterface::GAME_HALF_OVERTIME
+		'Half1'    => PlayInterface::GAME_HALF_FIRST,
+		'Half2'    => PlayInterface::GAME_HALF_SECOND,
+		'Overtime' => PlayInterface::GAME_HALF_OVERTIME
 	];
 
 	public static array $typeMappings = [
-		'pass' => PlayInterface::TYPE_PASS,
-		'run' => PlayInterface::TYPE_RUN,
-		'punt' => PlayInterface::TYPE_PUNT,
-		'field_goal' => PlayInterface::TYPE_FIELD_GOAL,
-		'kickoff' => PlayInterface::TYPE_KICKOFF,
+		'pass'        => PlayInterface::TYPE_PASS,
+		'run'         => PlayInterface::TYPE_RUN,
+		'punt'        => PlayInterface::TYPE_PUNT,
+		'field_goal'  => PlayInterface::TYPE_FIELD_GOAL,
+		'kickoff'     => PlayInterface::TYPE_KICKOFF,
 		'extra_point' => PlayInterface::TYPE_EXTRA_POINT,
-		'qb_kneel' => PlayInterface::TYPE_QB_KNEEL,
-		'qb_spike' => PlayInterface::TYPE_QB_SPIKE,
-		'no_play' => PlayInterface::TYPE_NO_PLAY,
-		'missing' => PlayInterface::TYPE_END_OF_PLAY,
-		'NA' => null
-	];
-
-	private static array $playTimeSourceFormats = [
-		'H:i',
-		'H:i:s'
+		'qb_kneel'    => PlayInterface::TYPE_QB_KNEEL,
+		'qb_spike'    => PlayInterface::TYPE_QB_SPIKE,
+		'no_play'     => PlayInterface::TYPE_NO_PLAY,
+		'missing'     => PlayInterface::TYPE_END_OF_PLAY,
+		'NA'          => null
 	];
 
 	private GameConverterInterface $gameConverter;
 
 	private DriveConverterInterface $driveConverter;
-	
+
 	private FlagsConverterInterface $flagsConverter;
 
 	private ExpectedPointsConverterInterface $expectedPointsConverter;
@@ -59,8 +53,7 @@ class PlayConverter extends AbstractCsvConverter implements PlayConverterInterfa
 		WinProbabilitiesConverterInterface $winProbabilitiesConverter,
 		PlayerAssignmentConverterInterface $playerAssignmentConverter,
 		TeamAssignmentConverterInterface $teamAssignmentConverter
-	)
-	{
+	) {
 		$this->repository = $repository;
 		$this->gameConverter = $gameConveter;
 		$this->driveConverter = $driveConverter;
@@ -75,11 +68,11 @@ class PlayConverter extends AbstractCsvConverter implements PlayConverterInterfa
 	{
 		$this->entityClass = Play::class;
 	}
-	
+
 	public function toEntity(array $record): Play
 	{
 		$game = $this->gameConverter->toEntity($record);
-		$drive = $this->driveConverter->toEntity($record, $game);
+		$drive = $this->driveConverter->toEntity($record);
 		$flags = $this->flagsConverter->toEntity($record);
 
 		$record[PlayInterface::COLUMN_GAME_ID] = $game->getId();
@@ -129,23 +122,23 @@ class PlayConverter extends AbstractCsvConverter implements PlayConverterInterfa
 	private function addExpectedPoints(Play $play, array $record)
 	{
 		$play->resetExpectedPoints();
-		foreach($this->expectedPointsConverter->buildExpectedPointsEntities($record) as $expectedPointsEntity) {
+		foreach ($this->expectedPointsConverter->buildExpectedPointsEntities($record) as $expectedPointsEntity) {
 			$play->addExpectedPoints($expectedPointsEntity);
 		}
 	}
-	
+
 	private function addWinProbabilities(Play $play, array $record)
 	{
 		$play->resetWinProbabilities();
-		foreach($this->winProbabilitiesConverter->buildWinProbabilityEntities($record) as $winProbabilityEntity) {
+		foreach ($this->winProbabilitiesConverter->buildWinProbabilityEntities($record) as $winProbabilityEntity) {
 			$play->addWinProbability($winProbabilityEntity);
 		}
 	}
-	
+
 	private function addPlayerAssignments(Play $play, array $record)
 	{
 		$play->resetPlayerAssignments();
-		foreach($this->playerAssignmentConverter->buildPlayerAssignments($record) as $playerAssignment) {
+		foreach ($this->playerAssignmentConverter->buildPlayerAssignments($record) as $playerAssignment) {
 			$play->addPlayerAssignment($playerAssignment);
 		}
 	}
@@ -153,7 +146,7 @@ class PlayConverter extends AbstractCsvConverter implements PlayConverterInterfa
 	private function addTeamAssignments(Play $play, array $record)
 	{
 		$play->resetTeamAssignments();
-		foreach($this->teamAssignmentConverter->buildTeamAssignments($record) as $teamAssignment) {
+		foreach ($this->teamAssignmentConverter->buildTeamAssignments($record) as $teamAssignment) {
 			$play->addTeamAssignment($teamAssignment);
 		}
 	}

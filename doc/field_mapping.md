@@ -9,8 +9,8 @@ The following tables list the complete mapping of CSV columns to object attribut
 
 **Class paths**:
 
-* RosterAssignment.Player
-* PlayerAssignment.Player
+* `{RosterAssignment.Player}` 
+* `{PlayerAssignment.Player}`
 
 | class attribute | columns       | comment        |
 |-----------------|---------------|----------------|
@@ -34,7 +34,7 @@ The following tables list the complete mapping of CSV columns to object attribut
 
 **Class paths**:
 
-* Player.Height ([embedded](https://www.doctrine-project.org/projects/doctrine-orm/en/2.8/tutorials/embeddables.html))
+* `{Player.Height}` ([embedded](https://www.doctrine-project.org/projects/doctrine-orm/en/2.8/tutorials/embeddables.html))
 
 | class attribute | columns | comment                         |
 |-----------------|---------|---------------------------------|
@@ -48,7 +48,7 @@ The following tables list the complete mapping of CSV columns to object attribut
 
 **Class paths**:
 
-* Player.Weight ([embedded](https://www.doctrine-project.org/projects/doctrine-orm/en/2.8/tutorials/embeddables.html))
+* `{Player.Weight}` ([embedded](https://www.doctrine-project.org/projects/doctrine-orm/en/2.8/tutorials/embeddables.html))
 
 | class attribute | columns | comment                |
 |-----------------|---------|------------------------|
@@ -61,8 +61,8 @@ The following tables list the complete mapping of CSV columns to object attribut
 
 **Class paths**:
 
-* Team.RosterAssignment[]
-* Player.RosterAssignment[]
+* `{Team.RosterAssignment[]}`
+* `{Player.RosterAssignment[]}`
 
 | class attribute    | columns              | comment                 |
 |--------------------|----------------------|-------------------------|
@@ -112,10 +112,10 @@ The following tables list the complete mapping of CSV columns to object attribut
 
 **Class paths**:
 
-* RosterAssignment.Team
-* Game.teamHome
-* Game.teamAway
-* TeamAssignment.Team
+* `{RosterAssignment.Team}`
+* `{Game.teamHome}`
+* `{Game.teamAway}`
+* `{TeamAssignment.Team}`
 
 | class attribute | columns | comment                                    |
 |-----------------|---------|--------------------------------------------|
@@ -174,8 +174,8 @@ The following tables list the complete mapping of CSV columns to object attribut
 
 **Class paths**:
 
-* Game.Drive[]
-* Play.Drive
+* `{Game.Drive[]}`
+* `{Play.Drive}`
 
 | class attribute | columns                  | comment        |
 |-----------------|--------------------------|----------------|
@@ -203,10 +203,10 @@ The following tables list the complete mapping of CSV columns to object attribut
 
 **Class paths**:
 
-* Team.Game[] as homeGames
-* Team.Game[] as awayGames
-* Play.Game
-* Drive.Game
+* `{Team.Game[]}` as homeGames
+* `{Team.Game[]}` as awayGames
+* `{Play.Game}`
+* `{Drive.Game}`
 
 | class attribute    | columns               | comment                    |
 |--------------------|-----------------------|----------------------------|
@@ -234,12 +234,12 @@ The following tables list the complete mapping of CSV columns to object attribut
 
 **Class paths**:
 
-* Game.Play[]
-* Drive.Play[]
-* ExpectedPoints.Play
-* WinProbability.Play
-* PlayerAssignmetns.Play
-* TeamAssignments.Play
+* `{Game.Play[]}`
+* `{Drive.Play[]}`
+* `{ExpectedPoints.Play}`
+* `{WinProbability.Play}`
+* `{PlayerAssignmetns.Play}`
+* `{TeamAssignments.Play}`
 
 | class attribute           | columns                   | comment                            |
 |---------------------------|---------------------------|------------------------------------|
@@ -270,7 +270,7 @@ The following tables list the complete mapping of CSV columns to object attribut
 
 **Class paths**:
 
-* Play.Flags ([embedded](https://www.doctrine-project.org/projects/doctrine-orm/en/2.8/tutorials/embeddables.html))
+* `{Play.Flags}` ([embedded](https://www.doctrine-project.org/projects/doctrine-orm/en/2.8/tutorials/embeddables.html))
 
 | class attribute      | columns                 | comment |
 |----------------------|-------------------------|---------|
@@ -364,8 +364,8 @@ The following tables list the complete mapping of CSV columns to object attribut
 
 **Class paths**:
 
-* Player.PlayerAssignment[]
-* Play.PlayerAssignment[]
+* `{Player.PlayerAssignment[]}`
+* `{Play.PlayerAssignment[]}`
 
 | class attribute | columns  | comment                                            |
 |-----------------|----------|----------------------------------------------------|
@@ -426,8 +426,8 @@ The following tables list the complete mapping of CSV columns to object attribut
 
 **Class paths**:
 
-* Team.TeamAssignment[]
-* Play.TeamAssignment[]
+* `{Team.TeamAssignment[]}`
+* `{Play.TeamAssignment[]}`
 
 | class attribute | columns  | comment                                            |
 |-----------------|----------|----------------------------------------------------|
@@ -469,7 +469,7 @@ The following tables list the complete mapping of CSV columns to object attribut
 
 **Class paths**:
 
-* Play.ExpectedPoints[]
+* `{Play.ExpectedPoints[]}`
 
 | class attribute | columns  | comment                                            |
 |-----------------|----------|----------------------------------------------------|
@@ -513,7 +513,7 @@ The following tables list the complete mapping of CSV columns to object attribut
 
 **Class paths**:
 
-* Play.WinProbability[]
+* `{Play.WinProbability[]}`
 
 | class attribute | columns  | comment                                            |
 |-----------------|----------|----------------------------------------------------|

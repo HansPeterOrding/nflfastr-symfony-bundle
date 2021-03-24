@@ -11,7 +11,7 @@ class ExpectedPoints implements ExpectedPointsInterface
 	protected ?int $id = null;
 
 	protected ?float $points = null;
-	
+
 	protected ?string $teamType = null;
 
 	protected bool $added = false;
@@ -21,7 +21,7 @@ class ExpectedPoints implements ExpectedPointsInterface
 	protected ?string $airOrYac = null;
 
 	protected ?Play $play = null;
-	
+
 	public function __construct()
 	{
 		$this->play = new Play();

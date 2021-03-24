@@ -6,8 +6,6 @@ namespace HansPeterOrding\NflFastrSymfonyBundle\Service;
 
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\DriveConverterInterface;
-use HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\GameConverterInterface;
 use HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\PlayConverterInterface;
 use HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\RosterAssignmentConverterInterface;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Game\Play;
@@ -18,7 +16,6 @@ use HansPeterOrding\NflFastrSymfonyBundle\Entity\PlayerInterface;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\TeamInterface;
 use HansPeterOrding\NflFastrSymfonyBundle\Message\PlayByPlayImport\ImportPlayRecordMessage;
 use HansPeterOrding\NflFastrSymfonyBundle\Message\RosterImport\ImportRosterRecordMessage;
-use HansPeterOrding\NflFastrSymfonyBundle\Repository\GameRepository;
 use HansPeterOrding\NflFastrSymfonyBundle\Repository\PlayRepository;
 use HansPeterOrding\NflFastrSymfonyBundle\Repository\TeamRepository;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -82,7 +79,7 @@ class ImportService
 		return $this;
 	}
 
-	public function importRosterSeason(int $season, bool $interactive = false)
+	public function importRosterSeason(int $season)
 	{
 		$this->output->writeln(sprintf('<info>Starting import of season %s</info>', $season));
 
@@ -116,7 +113,7 @@ class ImportService
 		$this->entityManager->clear();
 	}
 
-	public function importPlayByPlaySeason(int $season, int $counter, bool $skipUpdates, ?int $limit)
+	public function importPlayByPlaySeason(int $season, int $counter, bool $skipUpdates, ?int $limit): int
 	{
 		$finishedMessage = sprintf('Import for season %s finished.', $season);
 		$this->output->writeln(sprintf('<info>Starting import of season %s</info>', $season));
@@ -247,7 +244,7 @@ class ImportService
 			return null;
 		}
 
-		$play = $this->playConverter->toEntity($record, $skipUpdates);
+		$play = $this->playConverter->toEntity($record);
 
 		$this->entityManager->persist($play);
 		$this->entityManager->flush();
@@ -281,19 +278,13 @@ class ImportService
 
 	private function handleRosterRecordMessage(array $record): ?ImportRosterRecordMessage
 	{
-		try {
-			$importPlayRecordMessage = new ImportRosterRecordMessage();
-			$importPlayRecordMessage->setCreated(new DateTime());
-			$importPlayRecordMessage->setRecord($record);
+		$importPlayRecordMessage = new ImportRosterRecordMessage();
+		$importPlayRecordMessage->setCreated(new DateTime());
+		$importPlayRecordMessage->setRecord($record);
 
-			$this->messageBus->dispatch($importPlayRecordMessage);
+		$this->messageBus->dispatch($importPlayRecordMessage);
 
-			return $importPlayRecordMessage;
-		} catch (\Throwable $e) {
-			dump($e);
-			dump($record);
-			die();
-		}
+		return $importPlayRecordMessage;
 	}
 
 	private function initProgressBar(int $max)

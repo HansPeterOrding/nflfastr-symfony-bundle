@@ -52,7 +52,7 @@ class Weight
 		if (null === $this->kilograms) {
 			return null;
 		}
-		
+
 		return (int)round($this->kilograms / static::CONVERSION_FACTOR, 2);
 	}
 }

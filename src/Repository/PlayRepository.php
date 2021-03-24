@@ -6,15 +6,15 @@ namespace HansPeterOrding\NflFastrSymfonyBundle\Repository;
 
 use Doctrine\Persistence\ManagerRegistry;
 use HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\AbstractCsvConverter;
-use HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\CsvConverterInterface;
-use HansPeterOrding\NflFastrSymfonyBundle\Entity\Game;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Game\DriveInterface;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Game\Play;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Game\PlayInterface;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\GameInterface;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Team;
-use HansPeterOrding\NflFastrSymfonyBundle\Entity\TeamInterface;
 
+/**
+ * @method findOneBy(array $criteria, array $orderBy = null): ?Team
+ */
 class PlayRepository extends AbstractNflRepository implements NflRepositoryInterface
 {
 	const FIELD_PLAY_ID = 'playId';
@@ -24,27 +24,24 @@ class PlayRepository extends AbstractNflRepository implements NflRepositoryInter
 	protected static array $uniqueEntityFields = [
 		PlayInterface::COLUMN_PLAY_ID => self::FIELD_PLAY_ID,
 		GameInterface::COLUMN_GAME_ID => self::FIELD_GAME,
-		PlayInterface::COLUMN_DRIVE => self::FIELD_DRIVE
+		PlayInterface::COLUMN_DRIVE   => self::FIELD_DRIVE
 	];
-	
+
 	public function __construct(ManagerRegistry $registry)
 	{
 		parent::__construct($registry, Play::class);
 	}
 
 	/**
-	 * @param array $data
 	 * @return Team|null
 	 */
 	public function findUniqueEntity(array $data)
 	{
-		$entity = $this->findOneBy([
+		return $this->findOneBy([
 			self::FIELD_PLAY_ID => $data[PlayInterface::COLUMN_PLAY_ID],
-			self::FIELD_GAME => $data[PlayInterface::COLUMN_GAME_ID],
-			self::FIELD_DRIVE => $data[PlayInterface::COLUMN_DRIVE_ID]
+			self::FIELD_GAME    => $data[PlayInterface::COLUMN_GAME_ID],
+			self::FIELD_DRIVE   => $data[PlayInterface::COLUMN_DRIVE_ID]
 		]);
-
-		return $entity;
 	}
 
 	public function playExists(array $data): bool
@@ -68,9 +65,10 @@ class PlayRepository extends AbstractNflRepository implements NflRepositoryInter
 			->setParameter('number', AbstractCsvConverter::toInt($data[DriveInterface::COLUMN_DRIVE]));
 
 		$play = $qb->getQuery()->getOneOrNullResult();
-		if($play) {
+		if ($play) {
 			return true;
 		}
+
 		return false;
 	}
 }

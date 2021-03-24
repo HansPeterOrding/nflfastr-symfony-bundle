@@ -68,14 +68,14 @@ class ImportPlaysCommand extends AbstractImportNflFastrCommand
 		$counter = 0;
 
 		foreach ($seasons as $season) {
-			try {
-				$counter = $this->importService->importPlayByPlaySeason((int)$season, $counter, $skipUpdates, $limit?(int)$limit:false);
-				if($counter >= $limit) {
-					break;
-				}
-			} catch (\Throwable $e) {
-				dump($e);
-				die();
+			$counter = $this->importService->importPlayByPlaySeason(
+				(int)$season,
+				$counter,
+				$skipUpdates,
+				$limit ? (int)$limit : false
+			);
+			if ($counter >= $limit) {
+				break;
 			}
 		}
 

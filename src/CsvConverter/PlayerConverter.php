@@ -16,11 +16,6 @@ use HansPeterOrding\NflFastrSymfonyBundle\Repository\PlayerRepository;
  */
 class PlayerConverter extends AbstractCsvConverter implements PlayerConverterInterface
 {
-	private static array $birthDateSourceFormats = [
-		'Y-m-d',
-		'm/d/Y'
-	];
-
 	private static array $heightParsingPatterns = [
 		'#^(?<feet>\d+)\'(?<inches>\d+)"$#',
 		'#^(?<feet>\d+)-(?<inches>\d+)$#'
@@ -44,7 +39,7 @@ class PlayerConverter extends AbstractCsvConverter implements PlayerConverterInt
 		$player->setFirstName(static::toString($record[PlayerInterface::COLUMN_PLAYER_FIRSTNAME]));
 		$player->setLastName(static::toString($record[PlayerInterface::COLUMN_PLAYER_LASTNAME]));
 		$birthdate = static::toDate($record[PlayerInterface::COLUMN_PLAYER_BIRTHDATE]);
-		if($birthdate) {
+		if ($birthdate) {
 			$player->setBirthDate(DateTimeImmutable::createFromMutable($birthdate));
 		}
 
@@ -67,7 +62,7 @@ class PlayerConverter extends AbstractCsvConverter implements PlayerConverterInt
 
 		return $player;
 	}
-	
+
 	private function buildHeight(string $heightString): ?Height
 	{
 		$result = null;

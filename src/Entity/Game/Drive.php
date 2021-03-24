@@ -15,35 +15,35 @@ class Drive implements DriveInterface
 	protected ?Game $game = null;
 
 	protected ?int $number = null;
-	
+
 	protected ?DateTime $realStartTime = null;
-	
+
 	protected ?int $playCount = null;
-	
+
 	protected ?DateTime $timeOfPosession = null;
-	
+
 	protected ?int $firstDowns = null;
-	
+
 	protected bool $insideTwenty = false;
-	
+
 	protected bool $endedWithScore = false;
-	
+
 	protected ?int $quarterStart = null;
-	
+
 	protected ?int $quarterEnd = null;
-	
+
 	protected ?int $yardsPenalized = null;
-	
+
 	protected ?string $startTransition = null;
-	
+
 	protected ?string $endTransition = null;
-	
+
 	protected ?DateTime $gameClockStart = null;
-	
+
 	protected ?DateTime $gameClockEnd = null;
-	
+
 	protected ?string $startYardLine = null;
-	
+
 	protected ?string $endYardLine = null;
 
 	/**

@@ -6,7 +6,7 @@ namespace HansPeterOrding\NflFastrSymfonyBundle\Entity\Game\Play;
 
 interface TeamAssignmentInterface
 {
-	const TEAM_ASSIGNMENT_TYPE_POSESSION = 'posesion';
+	const TEAM_ASSIGNMENT_TYPE_POSSESSION = 'possession';
 	const TEAM_ASSIGNMENT_TYPE_DEFENSE = 'defense';
 	const TEAM_ASSIGNMENT_TYPE_TIMEOUT = 'timeout';
 	const TEAM_ASSIGNMENT_TYPE_TOUCHDOWN = 'touchdown';

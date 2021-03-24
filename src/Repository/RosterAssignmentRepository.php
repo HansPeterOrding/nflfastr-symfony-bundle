@@ -39,7 +39,6 @@ class RosterAssignmentRepository extends AbstractNflRepository implements NflRep
 	}
 
 	/**
-	 * @param array $data
 	 * @return RosterAssignment|null
 	 */
 	public function findUniqueEntity(array $data)

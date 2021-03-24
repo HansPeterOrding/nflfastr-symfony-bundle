@@ -16,7 +16,7 @@ class TeamAssignment implements TeamAssignmentInterface
 		TeamAssignmentInterface::TEAM_ASSIGNMENT_TYPE_FUMBLE_RECOVERY,
 		TeamAssignmentInterface::TEAM_ASSIGNMENT_TYPE_FUMBLED,
 		TeamAssignmentInterface::TEAM_ASSIGNMENT_TYPE_PENALTY,
-		TeamAssignmentInterface::TEAM_ASSIGNMENT_TYPE_POSESSION,
+		TeamAssignmentInterface::TEAM_ASSIGNMENT_TYPE_POSSESSION,
 		TeamAssignmentInterface::TEAM_ASSIGNMENT_TYPE_RETURN,
 		TeamAssignmentInterface::TEAM_ASSIGNMENT_TYPE_SOLO_TACKLE,
 		TeamAssignmentInterface::TEAM_ASSIGNMENT_TYPE_TACKLE_WITH_ASSIST,
@@ -25,7 +25,7 @@ class TeamAssignment implements TeamAssignmentInterface
 	];
 
 	protected ?int $id = null;
-	
+
 	protected ?string $type = null;
 
 	protected ?Team $team = null;

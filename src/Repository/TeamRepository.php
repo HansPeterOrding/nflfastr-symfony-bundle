@@ -17,7 +17,7 @@ use HansPeterOrding\NflFastrSymfonyBundle\Entity\TeamInterface;
 class TeamRepository extends AbstractNflRepository implements NflRepositoryInterface
 {
 	const FIELD_ABBREVIATION = 'abbreviation';
-	
+
 	public function __construct(ManagerRegistry $registry)
 	{
 		parent::__construct($registry, Team::class);
@@ -43,7 +43,6 @@ class TeamRepository extends AbstractNflRepository implements NflRepositoryInter
 	}
 
 	/**
-	 * @param array $data
 	 * @return Team|null
 	 */
 	public function findUniqueEntity(array $data)

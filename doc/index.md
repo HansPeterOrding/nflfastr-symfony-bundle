@@ -11,4 +11,4 @@ Available documentation for NflFastRSymfonyBundle
 * [Import strategies](import_strategies.md)
 * [Extending the bundle](extending_the_bundle.md)
 * [Contribute](contribute.md)
-* [Outlook](outlook.md)
+* [Roadmap](roadmap.md)

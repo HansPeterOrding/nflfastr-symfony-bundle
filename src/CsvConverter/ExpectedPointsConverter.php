@@ -127,7 +127,7 @@ class ExpectedPointsConverter extends AbstractCsvConverter implements ExpectedPo
 
 	private function mapAirOrYac(string $column): ?string
 	{
-		switch($column) {
+		switch ($column) {
 			case ExpectedPointsConverterInterface::COLUMN_AIR_EPA:
 			case ExpectedPointsConverterInterface::COLUMN_COMP_AIR_EPA:
 			case ExpectedPointsConverterInterface::COLUMN_TOTAL_HOME_COMP_AIR_EPA:

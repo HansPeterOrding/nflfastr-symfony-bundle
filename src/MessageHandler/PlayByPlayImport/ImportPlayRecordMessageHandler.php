@@ -21,15 +21,13 @@ class ImportPlayRecordMessageHandler implements MessageHandlerInterface, LoggerA
 
 	public function __construct(
 		ImportService $importService
-	)
-	{
+	) {
 		$this->importService = $importService;
 	}
 
 	public function __invoke(ImportPlayRecordMessage $message)
 	{
 		$record = $message->getRecord();
-		$season = $message->getSeason();
 		$skipUpdates = $message->isSkipUpdates();
 
 		$this->logger->info(sprintf(
@@ -41,7 +39,7 @@ class ImportPlayRecordMessageHandler implements MessageHandlerInterface, LoggerA
 
 		$play = $this->importService->handlePlayRecord($record, $skipUpdates);
 
-		if($play) {
+		if ($play) {
 			$this->logger->info(sprintf('Record imported.'));
 		} else {
 			$this->logger->info(sprintf('Record skipped.'));

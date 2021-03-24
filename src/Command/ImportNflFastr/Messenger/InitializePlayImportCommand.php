@@ -16,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class InitializePlayImportCommand extends AbstractImportNflFastrCommand
 {
 	const START_YEAR_PLAYS = 1999;
-	
+
 	protected static $defaultName = 'nflfastr-symfony:import:messenger:initialize-play-import';
 
 	public function __construct(
@@ -41,12 +41,12 @@ class InitializePlayImportCommand extends AbstractImportNflFastrCommand
 			'Pass this option to skip already imported plays. Otherwise imported plays will be updated with new data.'
 		);
 	}
-	
+
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 		$this->importService->setOutput($output);
 		$this->importService->setInput($input);
-		
+
 		$seasons = $input->getArgument('seasons');
 		$skipUpdates = $input->getOption('skip-updates');
 
@@ -56,15 +56,11 @@ class InitializePlayImportCommand extends AbstractImportNflFastrCommand
 			}
 		}
 
-		$output->writeln(sprintf('<bg=red;fg=white;options=bold>Initializing import for %s seasons.</>', count($seasons)));
+		$output->writeln(sprintf('<bg=red;fg=white;options=bold>Initializing import for %s seasons.</>',
+			count($seasons)));
 
 		foreach ($seasons as $season) {
-			try {
-				$this->importService->initializePlayByPlaySeason((int)$season, $skipUpdates);
-			} catch (\Throwable $e) {
-				dump($e);
-				die();
-			}
+			$this->importService->initializePlayByPlaySeason((int)$season, $skipUpdates);
 		}
 
 		return Command::SUCCESS;

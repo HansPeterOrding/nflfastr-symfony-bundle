@@ -24,8 +24,7 @@ class ImportRosterRecordMessageHandler implements MessageHandlerInterface, Logge
 
 	public function __construct(
 		ImportService $importService
-	)
-	{
+	) {
 		$this->importService = $importService;
 	}
 
@@ -39,7 +38,7 @@ class ImportRosterRecordMessageHandler implements MessageHandlerInterface, Logge
 			$record[TeamInterface::COLUMN_TEAM_ABBREVIATION]
 		));
 
-		$rosterAssignment = $this->importService->handleRosterRecord($record);
+		$this->importService->handleRosterRecord($record);
 
 		$this->logger->info(sprintf('Record imported.'));
 	}

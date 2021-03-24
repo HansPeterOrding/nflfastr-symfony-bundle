@@ -50,7 +50,6 @@ class PlayerRepository extends AbstractNflRepository implements NflRepositoryInt
 	}
 
 	/**
-	 * @param array $data
 	 * @return Player|null
 	 */
 	public function findUniqueEntity(array $data)
@@ -63,7 +62,7 @@ class PlayerRepository extends AbstractNflRepository implements NflRepositoryInt
 			$player = $this->findOneBy([
 				self::FIELD_FIRSTNAME => $data[PlayerInterface::COLUMN_PLAYER_FIRSTNAME],
 				self::FIELD_LASTNAME  => $data[PlayerInterface::COLUMN_PLAYER_LASTNAME],
-				self::FIELD_BIRTHDATE => $birthdate?DateTimeImmutable::createFromMutable($birthdate):null
+				self::FIELD_BIRTHDATE => $birthdate ? DateTimeImmutable::createFromMutable($birthdate) : null
 			]);
 		}
 

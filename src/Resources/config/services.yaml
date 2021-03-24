@@ -11,7 +11,7 @@ services:
     class: HansPeterOrding\NflFastrSymfonyBundle\Service\ResourceHandlerService
     arguments:
       $temporaryLocalStorage: '@nflfastrsymfony.temporarystorage'
-      $sources: []
+      $sources: [ ]
 
   HansPeterOrding\NflFastrSymfonyBundle\Service\ResourceHandlerService: '@nfl_fastr_symfony.resource_handler_service'
 

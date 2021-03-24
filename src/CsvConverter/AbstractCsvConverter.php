@@ -92,15 +92,13 @@ abstract class AbstractCsvConverter implements CsvConverterInterface
 		}
 
 		foreach (static::$dateSourceFormats as $dateSourceFormat) {
-			$dateTime = \DateTime::createFromFormat($dateSourceFormat, $dateString);
-			$dateTime->setTime(0, 0, 0);
+			$dateTime = DateTime::createFromFormat($dateSourceFormat, $dateString);
+			$dateTime->setTime(0, 0);
 
 			if ($dateTime) {
 				return $dateTime;
 			}
 		}
-
-		throw new \Exception(sprintf('Invalid date format %s', $dateString));
 
 		return null;
 	}
@@ -112,14 +110,12 @@ abstract class AbstractCsvConverter implements CsvConverterInterface
 		}
 
 		foreach (static::$timeSourceFormats as $timeSourceFormat) {
-			$dateTime = \DateTime::createFromFormat($timeSourceFormat, $timeString);
+			$dateTime = DateTime::createFromFormat($timeSourceFormat, $timeString);
 
 			if ($dateTime) {
 				return $dateTime;
 			}
 		}
-
-		throw new \Exception(sprintf('Invalid time format %s', $timeString));
 
 		return null;
 	}
@@ -131,14 +127,12 @@ abstract class AbstractCsvConverter implements CsvConverterInterface
 		}
 
 		foreach (static::$dateTimeSourceFormats as $dateTimeSourceFormat) {
-			$dateTime = \DateTime::createFromFormat($dateTimeSourceFormat, $dateTimeString);
+			$dateTime = DateTime::createFromFormat($dateTimeSourceFormat, $dateTimeString);
 
 			if ($dateTime) {
 				return $dateTime;
 			}
 		}
-
-		throw new \Exception(sprintf('Invalid datetime format %s', $dateTimeString));
 
 		return null;
 	}
@@ -155,8 +149,7 @@ abstract class AbstractCsvConverter implements CsvConverterInterface
 		$date->setTime(
 			(int)$time->format('G'),
 			(int)$time->format('m'),
-			(int)$time->format('s'),
-			0
+			(int)$time->format('s')
 		);
 
 		return $date;

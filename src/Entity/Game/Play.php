@@ -7,7 +7,6 @@ namespace HansPeterOrding\NflFastrSymfonyBundle\Entity\Game;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Game;
-use HansPeterOrding\NflFastrSymfonyBundle\Entity\Team;
 
 class Play
 {

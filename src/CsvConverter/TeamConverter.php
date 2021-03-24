@@ -17,8 +17,7 @@ class TeamConverter extends AbstractCsvConverter implements TeamConverterInterfa
 {
 	public function __construct(
 		TeamRepository $repository
-	)
-	{
+	) {
 		$this->repository = $repository;
 	}
 
@@ -37,7 +36,10 @@ class TeamConverter extends AbstractCsvConverter implements TeamConverterInterfa
 
 		$teamName = constant("HansPeterOrding\NflFastrSymfonyBundle\Entity\TeamInterface::TEAM_TITLE_" . $team->getAbbreviation());
 		if ($teamName === null) {
-			throw new ConversionException(sprintf('<error>No default team title found for %s</error>', $team->getAbbreviation()));
+			throw new ConversionException(sprintf(
+				'<error>No default team title found for %s</error>',
+				$team->getAbbreviation()
+			));
 		}
 
 		$team->setName($teamName);

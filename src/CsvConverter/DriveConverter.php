@@ -17,8 +17,7 @@ class DriveConverter extends AbstractCsvConverter implements DriveConverterInter
 	public function __construct(
 		DriveRepository $repository,
 		GameConverterInterface $gameConverter
-	)
-	{
+	) {
 		$this->repository = $repository;
 		$this->gameConverter = $gameConverter;
 	}
@@ -30,7 +29,7 @@ class DriveConverter extends AbstractCsvConverter implements DriveConverterInter
 
 	public function toEntity(array $record, ?Game $game = null): Drive
 	{
-		if(!$game) {
+		if (!$game) {
 			$game = $this->gameConverter->toEntity($record);
 		}
 
