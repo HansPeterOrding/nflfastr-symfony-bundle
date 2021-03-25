@@ -10,8 +10,10 @@ in 0.9 versions.
 
 Features:
 
-* Entities
-* Migrations
-* Repositories
-* Converters
-* Import stratgies `direct` and `Symfony messenger`
+* Entities that reflect the NflfastR data
+* Migrations to create database tables
+* Repositories to query those database tables
+* Converters that create entities from CSV data
+* Different import strategies to match environmental requirements:
+  * direct: Import data directly in a console
+  * Symfony messenger: Import data using Symfony messenger bundle
