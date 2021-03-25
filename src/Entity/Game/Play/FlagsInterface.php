@@ -13,6 +13,7 @@ interface FlagsInterface
 	const COLUMN_QB_SPIKE = 'qb_spike';
 	const COLUMN_QB_SCRAMBLE = 'qb_scramble';
 	const COLUMN_PUNT_BLOCKED = 'punt_blocked';
+	const COLUMN_OUT_OF_BOUNDS = 'out_of_bounds';
 	const COLUMN_FIRST_DOWN_RUSH = 'first_down_rush';
 	const COLUMN_FIRST_DOWN_PASS = 'first_down_pass';
 	const COLUMN_FIRST_DOWN_PENALTY = 'first_down_penalty';

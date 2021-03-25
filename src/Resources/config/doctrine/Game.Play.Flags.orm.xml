@@ -11,6 +11,7 @@
         <field name="qbSpike" type="boolean"/>
         <field name="qbScramble" type="boolean"/>
         <field name="puntBlocked" type="boolean"/>
+        <field name="outOfBounds" type="boolean"/>
         <field name="firstDownRush" type="boolean"/>
         <field name="firstDownPass" type="boolean"/>
         <field name="firstDownPenalty" type="boolean"/>

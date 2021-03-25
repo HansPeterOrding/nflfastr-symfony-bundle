@@ -12,6 +12,8 @@ interface PlayerAssignmentInterface
 	const PLAYER_ASSIGNMENT_TYPE_RUSHER = 'rusher';
 	const PLAYER_ASSIGNMENT_TYPE_LATERAL_RECEIVER = 'lateralReceiver';
 	const PLAYER_ASSIGNMENT_TYPE_LATERAL_RUSHER = 'lateralRusher';
+	const PLAYER_ASSIGNMENT_TYPE_SACK = 'sack';
+	const PLAYER_ASSIGNMENT_TYPE_HALF_SACK = 'halfSack';
 	const PLAYER_ASSIGNMENT_TYPE_LATERAL_SACK = 'lateralSack';
 	const PLAYER_ASSIGNMENT_TYPE_INTERCEPTION = 'interception';
 	const PLAYER_ASSIGNMENT_TYPE_LATERAL_INTERCEPTION = 'lateralInterception';

@@ -12,6 +12,9 @@ interface PlayerAssignmentConverterInterface extends CsvConverterInterface
 	const COLUMN_RUSHER_PLAYER_ID = 'rusher_player_id';
 	const COLUMN_LATERAL_RECEIVER_PLAYER_ID = 'lateral_receiver_player_id';
 	const COLUMN_LATERAL_RUSHER_PLAYER_ID = 'lateral_rusher_player_id';
+	const COLUMN_SACK_PLAYER_ID = 'sack_player_id';
+	const COLUMN_HALF_SACK_1_PLAYER_ID = 'half_sack_1_player_id';
+	const COLUMN_HALF_SACK_2_PLAYER_ID = 'half_sack_2_player_id';
 	const COLUMN_LATERAL_SACK_PLAYER_ID = 'lateral_sack_player_id';
 	const COLUMN_INTERCEPTION_PLAYER_ID = 'interception_player_id';
 	const COLUMN_LATERAL_INTERCEPTION_PLAYER_ID = 'lateral_interception_player_id';

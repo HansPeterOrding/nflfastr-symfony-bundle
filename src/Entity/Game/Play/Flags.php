@@ -20,6 +20,8 @@ class Flags implements FlagsInterface
 
 	protected bool $puntBlocked = false;
 
+	protected bool $outOfBounds = false;
+
 	protected bool $firstDownRush = false;
 
 	protected bool $firstDownPass = false;
@@ -200,6 +202,18 @@ class Flags implements FlagsInterface
 	public function setPuntBlocked(bool $puntBlocked): self
 	{
 		$this->puntBlocked = $puntBlocked;
+
+		return $this;
+	}
+
+	public function isOutOfBounds(): bool
+	{
+		return $this->outOfBounds;
+	}
+
+	public function setOutOfBounds(bool $outOfBounds): self
+	{
+		$this->outOfBounds = $outOfBounds;
 
 		return $this;
 	}

@@ -58,7 +58,7 @@ abstract class AbstractCsvConverter implements CsvConverterInterface
 		return false;
 	}
 
-	protected static function toString(string $value, $nullable = true): ?string
+	public static function toString(string $value, $nullable = true): ?string
 	{
 		if ($value === CsvConverterInterface::FIELD_VALUE_NOT_AVAILABLE) {
 			return $nullable ? null : '';

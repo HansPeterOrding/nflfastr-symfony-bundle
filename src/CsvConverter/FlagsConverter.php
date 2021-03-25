@@ -25,6 +25,7 @@ class FlagsConverter extends AbstractCsvConverter implements FlagsConverterInter
 		$flags->setQbSpike(static::toBool($record[FlagsInterface::COLUMN_QB_SPIKE]));
 		$flags->setQbScramble(static::toBool($record[FlagsInterface::COLUMN_QB_SCRAMBLE]));
 		$flags->setPuntBlocked(static::toBool($record[FlagsInterface::COLUMN_PUNT_BLOCKED]));
+		$flags->setOutOfBounds(static::toBool($record[FlagsInterface::COLUMN_OUT_OF_BOUNDS]));
 		$flags->setFirstDownRush(static::toBool($record[FlagsInterface::COLUMN_FIRST_DOWN_RUSH]));
 		$flags->setFirstDownPass(static::toBool($record[FlagsInterface::COLUMN_FIRST_DOWN_PASS]));
 		$flags->setFirstDownPenalty(static::toBool($record[FlagsInterface::COLUMN_FIRST_DOWN_PENALTY]));

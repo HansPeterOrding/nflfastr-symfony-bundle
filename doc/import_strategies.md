@@ -40,6 +40,7 @@ Upsides:
 * Runs in background
 * Can be automated easily
 * Faster
+* Scalable by spawning multiple queue workers
 
 Downsides:
 * Asynchronous
@@ -104,6 +105,8 @@ $ bin/console messenger:consume nflfastr.import_roster_record --limit=1000
 You can execute this manually until all messages are consumed or establish a worker managment in your own environment following your needs.
 The [symfony docs](https://symfony.com/doc/current/messenger.html#supervisor-configuration) suggest to use the tool supervisor for this, but you can also find your own setup.
 
+> IMPORTANT: As the initialize command creates the message in order of teams, multiple workers could possibly create duplicates if they are 'too fast'.
+
 ##### Play import
 
 For step one, open a command console, enter your project directory and execute the
@@ -150,6 +153,7 @@ Downsides:
 * Extremely memory intensive
 * Automating is complicated/ not possible
 * Needs personal backing
+* Not scalable
 
 #### Instructions to import
 

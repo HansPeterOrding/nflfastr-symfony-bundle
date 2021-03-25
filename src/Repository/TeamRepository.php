@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HansPeterOrding\NflFastrSymfonyBundle\Repository;
 
 use Doctrine\Persistence\ManagerRegistry;
+use HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\AbstractCsvConverter;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Team;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\TeamInterface;
 
@@ -48,7 +49,7 @@ class TeamRepository extends AbstractNflRepository implements NflRepositoryInter
 	public function findUniqueEntity(array $data)
 	{
 		return $this->findOneBy([
-			self::FIELD_ABBREVIATION => $data[TeamInterface::COLUMN_TEAM_ABBREVIATION]
+			self::FIELD_ABBREVIATION => AbstractCsvConverter::toString($data[TeamInterface::COLUMN_TEAM_ABBREVIATION])
 		]);
 	}
 }
