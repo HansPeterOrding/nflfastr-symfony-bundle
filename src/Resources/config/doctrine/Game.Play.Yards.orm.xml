@@ -1,0 +1,24 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                    http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <embeddable name="HansPeterOrding\NflFastrSymfonyBundle\Entity\Game\Play\Yards">
+        <field name="gained" type="integer" nullable="true"/>
+        <field name="net" type="integer" nullable="true"/>
+        <field name="toGo" type="integer" nullable="true"/>
+        <field name="air" type="integer" nullable="true"/>
+        <field name="afterCatch" type="integer" nullable="true"/>
+        <field name="passing" type="integer" nullable="true"/>
+        <field name="receiving" type="integer" nullable="true"/>
+        <field name="rushing" type="integer" nullable="true"/>
+        <field name="lateralReceiving" type="integer" nullable="true"/>
+        <field name="lateralRushing" type="integer" nullable="true"/>
+        <field name="fumbleRecovery1" type="integer" nullable="true"/>
+        <field name="funbleRecovery2" type="integer" nullable="true"/>
+        <field name="return" type="integer" nullable="true"/>
+        <field name="penalty" type="integer" nullable="true"/>
+        <field name="drivePenalized" type="integer" nullable="true"/>
+    </embeddable>
+
+</doctrine-mapping>

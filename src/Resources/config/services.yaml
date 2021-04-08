@@ -81,6 +81,12 @@ services:
   HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\FlagsConverterInterface:
     class: HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\FlagsConverter
 
+  HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\PlayResultsConverterInterface:
+    class: HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\PlayResultsConverter
+
+  HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\YardsConverterInterface:
+    class: HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\YardsConverter
+
   HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\ExpectedPointsConverterInterface:
     class: HansPeterOrding\NflFastrSymfonyBundle\CsvConverter\ExpectedPointsConverter
 

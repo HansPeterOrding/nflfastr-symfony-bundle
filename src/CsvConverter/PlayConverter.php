@@ -36,6 +36,10 @@ class PlayConverter extends AbstractCsvConverter implements PlayConverterInterfa
 
 	private FlagsConverterInterface $flagsConverter;
 
+	private PlayResultsConverterInterface $playResultsConverter;
+
+	private YardsConverterInterface $yardsConverter;
+
 	private ExpectedPointsConverterInterface $expectedPointsConverter;
 
 	private WinProbabilitiesConverterInterface $winProbabilitiesConverter;
@@ -49,6 +53,8 @@ class PlayConverter extends AbstractCsvConverter implements PlayConverterInterfa
 		GameConverterInterface $gameConveter,
 		DriveConverterInterface $driveConverter,
 		FlagsConverterInterface $flagsConverter,
+		PlayResultsConverterInterface $playResultsConverter,
+		YardsConverterInterface $yardsConverter,
 		ExpectedPointsConverterInterface $expectedPointsConverter,
 		WinProbabilitiesConverterInterface $winProbabilitiesConverter,
 		PlayerAssignmentConverterInterface $playerAssignmentConverter,
@@ -58,6 +64,8 @@ class PlayConverter extends AbstractCsvConverter implements PlayConverterInterfa
 		$this->gameConverter = $gameConveter;
 		$this->driveConverter = $driveConverter;
 		$this->flagsConverter = $flagsConverter;
+		$this->playResultsConverter = $playResultsConverter;
+		$this->yardsConverter = $yardsConverter;
 		$this->expectedPointsConverter = $expectedPointsConverter;
 		$this->winProbabilitiesConverter = $winProbabilitiesConverter;
 		$this->playerAssignmentConverter = $playerAssignmentConverter;
@@ -74,6 +82,8 @@ class PlayConverter extends AbstractCsvConverter implements PlayConverterInterfa
 		$game = $this->gameConverter->toEntity($record);
 		$drive = $this->driveConverter->toEntity($record);
 		$flags = $this->flagsConverter->toEntity($record);
+		$playResults = $this->playResultsConverter->toEntity($record);
+		$yards = $this->yardsConverter->toEntity($record);
 
 		$record[PlayInterface::COLUMN_GAME_ID] = $game->getId();
 		$record[PlayInterface::COLUMN_DRIVE_ID] = $drive->getId();
@@ -97,19 +107,17 @@ class PlayConverter extends AbstractCsvConverter implements PlayConverterInterfa
 		$play->setDown(static::toInt($record[PlayInterface::COLUMN_DOWN]));
 		$play->setGoalToGo(static::toBool($record[PlayInterface::COLUMN_GOAL_TO_GO]));
 		$play->setTime(static::toTime($record[PlayInterface::COLUMN_TIME]));
-		$play->setYardsToGo(static::toInt($record[PlayInterface::COLUMN_YDSTOGO]));
-		$play->setYardsNet(static::toInt($record[PlayInterface::COLUMN_YDSNET]));
 		$play->setDescription($record[PlayInterface::COLUMN_DESC]);
 
 		$play->setType(
 			static::$typeMappings[$record[PlayInterface::COLUMN_PLAY_TYPE]]
 		);
-
-		$play->setYardsGained(static::toInt($record[PlayInterface::COLUMN_YARDS_GAINED], false));
-
+		
 		$play->setGame($game);
 		$play->setDrive($drive);
 		$play->setFlags($flags);
+		$play->setPlayResults($playResults);
+		$play->setYards($yards);
 
 		$this->addExpectedPoints($play, $record);
 		$this->addWinProbabilities($play, $record);

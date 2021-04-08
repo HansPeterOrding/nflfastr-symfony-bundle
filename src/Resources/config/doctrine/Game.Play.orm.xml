@@ -9,6 +9,7 @@
         </id>
 
         <field name="playId" type="string" length="30"/>
+        <field name="playDeleted" type="boolean"/>
         <field name="possessionTeamSideOfField" type="string" length="30" nullable="true"/>
         <field name="yardLine100" type="integer" nullable="true"/>
         <field name="secondsRemainingQuarter" type="integer" nullable="true"/>
@@ -21,17 +22,24 @@
         <field name="down" type="integer" nullable="true"/>
         <field name="goalToGo" type="boolean"/>
         <field name="time" type="datetime" nullable="true"/>
-        <field name="yardsToGo" type="integer"/>
-        <field name="yardsNet" type="integer" nullable="true"/>
         <field name="description" type="text"/>
         <field name="type" type="string" length="30" nullable="true"/>
-        <field name="yardsGained" type="integer"/>
         <field name="originalPlayData" type="json_array"/>
 
         <embedded
                 name="flags"
                 class="HansPeterOrding\NflFastrSymfonyBundle\Entity\Game\Play\Flags"
                 column-prefix="flags_"/>
+
+        <embedded
+                name="playResults"
+                class="HansPeterOrding\NflFastrSymfonyBundle\Entity\Game\Play\PlayResults"
+                column-prefix="playResults_"/>
+
+        <embedded
+                name="yards"
+                class="HansPeterOrding\NflFastrSymfonyBundle\Entity\Game\Play\Yards"
+                column-prefix="yards_"/>
 
         <many-to-one
                 field="game"

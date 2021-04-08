@@ -76,6 +76,7 @@ class FlagsConverter extends AbstractCsvConverter implements FlagsConverterInter
 		$flags->setLateralRush(static::toBool($record[FlagsInterface::COLUMN_LATERAL_RUSH]));
 		$flags->setLateralReturn(static::toBool($record[FlagsInterface::COLUMN_LATERAL_RETURN]));
 		$flags->setLateralRecovery(static::toBool($record[FlagsInterface::COLUMN_LATERAL_RECOVERY]));
+		$flags->setSpecial(static::toBool($record[FlagsInterface::COLUMN_SPECIAL]));
 
 		return $flags;
 	}
