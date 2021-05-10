@@ -15,7 +15,7 @@ Features:
   * `{Play.playDeleted}`
 * Move yard columns to sub-entity `{Yards}`
 * Introduce sub-entity `{PlayResults}`
-* Allow null for some columns
+* Allow null for some column
 
 ### 0.9.0 (2021-03-25)
 
