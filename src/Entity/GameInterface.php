@@ -9,6 +9,7 @@ interface GameInterface
 	const COLUMN_GAME_ID = 'game_id';
 	const COLUMN_OLD_GAME_ID = 'old_game_id';
 	const COLUMN_SEASON_TYPE = 'season_type';
+	const COLUMN_SEASON = 'season';
 	const COLUMN_WEEK = 'week';
 	const COLUMN_GAME_DATE = 'game_date';
 	const COLUMN_START_TIME = 'start_time';

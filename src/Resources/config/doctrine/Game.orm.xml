@@ -11,6 +11,7 @@
         <field name="gameId" type="string" length="30"/>
         <field name="oldGameId" type="string" length="30"/>
         <field name="seasonType" type="string" length="30"/>
+        <field name="season" type="integer"/>
         <field name="week" type="integer"/>
         <field name="datetime" type="datetime"/>
         <field name="totalScoreHomeTeam" type="integer"/>

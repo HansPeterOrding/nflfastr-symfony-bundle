@@ -122,6 +122,8 @@ class Flags implements FlagsInterface
 
 	protected bool $lateralRecovery = false;
 
+	protected bool $special = false;
+
 	public function isShotgun(): bool
 	{
 		return $this->shotgun;
@@ -814,6 +816,18 @@ class Flags implements FlagsInterface
 	public function setLateralRecovery(bool $lateralRecovery): self
 	{
 		$this->lateralRecovery = $lateralRecovery;
+
+		return $this;
+	}
+
+	public function isSpecial(): bool
+	{
+		return $this->special;
+	}
+
+	public function setSpecial(bool $special): self
+	{
+		$this->special = $special;
 
 		return $this;
 	}

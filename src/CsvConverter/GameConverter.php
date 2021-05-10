@@ -45,6 +45,7 @@ class GameConverter extends AbstractCsvConverter implements GameConverterInterfa
 		$game->setSeasonType(
 			static::$seasonTypeMappings[$record[GameInterface::COLUMN_SEASON_TYPE]]
 		);
+		$game->setSeason(static::toInt($record[GameInterface::COLUMN_SEASON]));
 		$game->setWeek(static::toInt($record[GameInterface::COLUMN_WEEK]));
 		$game->setDateTime(
 			static::combineDateAndTime(

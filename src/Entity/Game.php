@@ -23,6 +23,8 @@ class Game implements GameInterface
 
 	protected ?string $seasonType = null;
 
+	protected ?int $season = null;
+
 	protected ?int $week = null;
 
 	protected ?DateTime $datetime = null;
@@ -117,6 +119,18 @@ class Game implements GameInterface
 	public function setSeasonType(?string $seasonType): self
 	{
 		$this->seasonType = $seasonType;
+
+		return $this;
+	}
+
+	public function getSeason(): ?int
+	{
+		return $this->season;
+	}
+
+	public function setSeason(?int $season): self
+	{
+		$this->season = $season;
 
 		return $this;
 	}

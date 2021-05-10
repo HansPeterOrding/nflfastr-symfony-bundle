@@ -23,11 +23,8 @@ interface PlayInterface
 	const COLUMN_DOWN = 'down';
 	const COLUMN_GOAL_TO_GO = 'goal_to_go';
 	const COLUMN_TIME = 'time';
-	const COLUMN_YDSTOGO = 'ydstogo';
-	const COLUMN_YDSNET = 'ydsnet';
 	const COLUMN_DESC = 'desc';
 	const COLUMN_PLAY_TYPE = 'play_type';
-	const COLUMN_YARDS_GAINED = 'yards_gained';
 
 	const GAME_HALF_FIRST = 'first';
 	const GAME_HALF_SECOND = 'second';

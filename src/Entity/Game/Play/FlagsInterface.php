@@ -64,4 +64,5 @@ interface FlagsInterface
 	const COLUMN_LATERAL_RUSH = 'lateral_rush';
 	const COLUMN_LATERAL_RETURN = 'lateral_return';
 	const COLUMN_LATERAL_RECOVERY = 'lateral_recovery';
+	const COLUMN_SPECIAL = 'special';
 }

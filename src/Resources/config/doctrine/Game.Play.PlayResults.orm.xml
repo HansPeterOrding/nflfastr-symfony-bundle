@@ -1,0 +1,15 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                    http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <embeddable name="HansPeterOrding\NflFastrSymfonyBundle\Entity\Game\Play\PlayResults">
+        <field name="extraPointResult" type="string" length="255" nullable="true"/>
+        <field name="fieldGoalResult" type="string" length="255" nullable="true"/>
+        <field name="replayOrChallengeResult" type="string" length="255" nullable="true"/>
+        <field name="seriesResult" type="string" length="255" nullable="true"/>
+        <field name="twoPointConversionResult" type="string" length="255" nullable="true"/>
+        <field name="kickDistance" type="integer" nullable="true"/>
+    </embeddable>
+
+</doctrine-mapping>

@@ -8,11 +8,13 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use HansPeterOrding\NflFastrSymfonyBundle\Entity\Game;
 
-class Play
+class Play implements PlayInterface
 {
 	protected ?int $id = null;
 
 	protected ?int $playId = null;
+
+	protected bool $playDeleted = false;
 
 	protected ?Game $game = null;
 
@@ -42,17 +44,15 @@ class Play
 
 	protected ?DateTime $time = null;
 
-	protected ?int $yardsToGo = null;
-
-	protected ?int $yardsNet = null;
-
 	protected ?string $description = null;
 
 	protected ?string $type = null;
 
-	protected ?int $yardsGained = null;
-
 	protected ?Game\Play\Flags $flags = null;
+
+	protected ?Game\Play\PlayResults $playResults = null;
+
+	protected ?Game\Play\Yards $yards = null;
 
 	/**
 	 * @var ArrayCollection|Game\Play\ExpectedPoints[]
@@ -106,6 +106,18 @@ class Play
 	public function setPlayId(?int $playId): self
 	{
 		$this->playId = $playId;
+
+		return $this;
+	}
+
+	public function isPlayDeleted(): bool
+	{
+		return $this->playDeleted;
+	}
+
+	public function setPlayDeleted(bool $playDeleted): self
+	{
+		$this->playDeleted = $playDeleted;
 
 		return $this;
 	}
@@ -278,30 +290,6 @@ class Play
 		return $this;
 	}
 
-	public function getYardsToGo(): ?int
-	{
-		return $this->yardsToGo;
-	}
-
-	public function setYardsToGo(?int $yardsToGo): self
-	{
-		$this->yardsToGo = $yardsToGo;
-
-		return $this;
-	}
-
-	public function getYardsNet(): ?int
-	{
-		return $this->yardsNet;
-	}
-
-	public function setYardsNet(?int $yardsNet): self
-	{
-		$this->yardsNet = $yardsNet;
-
-		return $this;
-	}
-
 	public function getDescription(): ?string
 	{
 		return $this->description;
@@ -326,18 +314,6 @@ class Play
 		return $this;
 	}
 
-	public function getYardsGained(): ?int
-	{
-		return $this->yardsGained;
-	}
-
-	public function setYardsGained(?int $yardsGained): self
-	{
-		$this->yardsGained = $yardsGained;
-
-		return $this;
-	}
-
 	public function getFlags(): ?Play\Flags
 	{
 		return $this->flags;
@@ -346,6 +322,30 @@ class Play
 	public function setFlags(?Play\Flags $flags): self
 	{
 		$this->flags = $flags;
+
+		return $this;
+	}
+
+	public function getPlayResults(): ?Play\PlayResults
+	{
+		return $this->playResults;
+	}
+
+	public function setPlayResults(?Play\PlayResults $playResults): self
+	{
+		$this->playResults = $playResults;
+
+		return $this;
+	}
+
+	public function getYards(): ?Play\Yards
+	{
+		return $this->yards;
+	}
+
+	public function setYards(?Play\Yards $yards): self
+	{
+		$this->yards = $yards;
 
 		return $this;
 	}
