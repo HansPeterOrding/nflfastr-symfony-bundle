@@ -4,6 +4,19 @@ CHANGELOG for 0.9.x
 This changelog references the relevant changes (bug and security fixes) done
 in 0.9 versions.
 
+### 0.9.1 (2021-05-10)
+
+Features:
+
+* Reflect latest changes from NflfastR:
+  * Added 'special' flag
+* Add new columns:
+  * `{Game.season}`
+  * `{Play.playDeleted}`
+* Move yard columns to sub-entity `{Yards}`
+* Introduce sub-entity `{PlayResults}`
+* Allow null for some columns
+
 ### 0.9.0 (2021-03-25)
 
 **Hello world! The bundle is born.**
