@@ -154,9 +154,10 @@ class ImportService
 		return $counter;
 	}
 
-	public function initializePlayByPlaySeason(int $season, bool $skipUpdates)
+	public function initializePlayByPlaySeason(int $season, bool $skipUpdates, int $limit = 0, int $offset = 0)
 	{
-		$this->output->writeln(sprintf('<info>Starting initialization of season %s</info>', $season));
+		$message = sprintf('<info>Starting initialization of season %s with limit %s and offset %s</info>', $season, $limit, $offset);
+		$this->output->writeln($message);
 
 		$fileInfo = $this->resourceHandlerService->buildPlayByPlayFileInfo($season);
 
@@ -165,6 +166,7 @@ class ImportService
 
 		$this->initProgressBar($this->resourceHandlerService->getFoundRows());
 
+		$counter = 0;
 		foreach ($records as $record) {
 			$this->progressBar->setMessage(sprintf(
 				'Creating import message for play ID %s from game ID %s in drive %s',
@@ -173,7 +175,13 @@ class ImportService
 				$record[PlayInterface::COLUMN_DRIVE]
 			));
 
-			$this->handlePlayRecordMessage($season, $record, $skipUpdates);
+			if($offset === 0 || $counter >= $offset) {
+				$this->handlePlayRecordMessage($season, $record, $skipUpdates);
+			}
+			$counter++;
+			if($limit > 0 && $counter - $offset >= $limit) {
+				break;
+			}
 
 			$this->progressBar->advance();
 		}

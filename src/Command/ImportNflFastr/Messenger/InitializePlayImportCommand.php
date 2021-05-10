@@ -40,6 +40,18 @@ class InitializePlayImportCommand extends AbstractImportNflFastrCommand
 			InputOption::VALUE_NONE,
 			'Pass this option to skip already imported plays. Otherwise imported plays will be updated with new data.'
 		);
+		$this->addOption(
+			'offset',
+			'o',
+			InputOption::VALUE_OPTIONAL,
+			'Pass this option to start with an offset in each season to import.'
+		);
+		$this->addOption(
+			'limit',
+			'l',
+			InputOption::VALUE_OPTIONAL,
+			'Pass this option to limit the number of created event messages.'
+		);
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output)
@@ -49,6 +61,8 @@ class InitializePlayImportCommand extends AbstractImportNflFastrCommand
 
 		$seasons = $input->getArgument('seasons');
 		$skipUpdates = $input->getOption('skip-updates');
+		$offset = $input->getOption('offset');
+		$limit = $input->getOption('limit');
 
 		if (!$seasons) {
 			for ($i = static::START_YEAR_PLAYS; $i <= (new DateTime())->format('Y'); $i++) {
@@ -60,7 +74,7 @@ class InitializePlayImportCommand extends AbstractImportNflFastrCommand
 			count($seasons)));
 
 		foreach ($seasons as $season) {
-			$this->importService->initializePlayByPlaySeason((int)$season, $skipUpdates);
+			$this->importService->initializePlayByPlaySeason((int)$season, $skipUpdates, (int)$limit, (int)$offset);
 		}
 
 		return Command::SUCCESS;
