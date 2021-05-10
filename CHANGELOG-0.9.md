@@ -16,6 +16,7 @@ Features:
 * Move yard columns to sub-entity `{Yards}`
 * Introduce sub-entity `{PlayResults}`
 * Allow null for some column
+* Introduce limit and offset for play by play data via Symfony Messenger
 
 ### 0.9.0 (2021-03-25)
 
