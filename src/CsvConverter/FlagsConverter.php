@@ -30,7 +30,7 @@ class FlagsConverter extends AbstractCsvConverter implements FlagsConverterInter
 		$flags->setFirstDownPass(static::toBool($record[FlagsInterface::COLUMN_FIRST_DOWN_PASS]));
 		$flags->setFirstDownPenalty(static::toBool($record[FlagsInterface::COLUMN_FIRST_DOWN_PENALTY]));
 		$flags->setThirdDownConverted(static::toBool($record[FlagsInterface::COLUMN_THIRD_DOWN_CONVERTED]));
-		$flags->setThirdDownFailed(static::toBool($record[FlagsInterface::COLUMN_THIRD_DOWN_CONVERTED]));
+		$flags->setThirdDownFailed(static::toBool($record[FlagsInterface::COLUMN_THIRD_DOWN_FAILED]));
 		$flags->setFourthDownConverted(static::toBool($record[FlagsInterface::COLUMN_FOURTH_DOWN_CONVERTED]));
 		$flags->setFourthDownFailed(static::toBool($record[FlagsInterface::COLUMN_FOURTH_DOWN_FAILED]));
 		$flags->setIncompletePass(static::toBool($record[FlagsInterface::COLUMN_INCOMPLETE_PASS]));

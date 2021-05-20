@@ -15,7 +15,7 @@ use HansPeterOrding\NflFastrSymfonyBundle\Entity\Team;
 /**
  * @method findOneBy(array $criteria, array $orderBy = null): ?Team
  */
-class PlayRepository extends AbstractNflRepository implements NflRepositoryInterface
+class PlayRepository extends AbstractNflRepository implements NflRepositoryInterface, PlayRepositoryInterface
 {
 	const FIELD_PLAY_ID = 'playId';
 	const FIELD_GAME = 'game';
