@@ -4,6 +4,16 @@ CHANGELOG for 0.9.x
 This changelog references the relevant changes (bug and security fixes) done
 in 0.9 versions.
 
+### 0.9.2 (2021-05-20)
+
+Features:
+
+* Introduce PlayRepositoryInterface with database column constants
+  
+Bugfixes:
+
+* fix mapping error
+
 ### 0.9.1 (2021-05-10)
 
 Features:
