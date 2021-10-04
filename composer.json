@@ -4,7 +4,7 @@
   "description": "Symfony bundle to import data from nflfastR-data to symfony",
   "license": "MIT",
   "require": {
-    "php": "^7.4.0",
+    "php": ">=7.4",
     "symfony/config": "^5.1",
     "symfony/console": "^5.1",
     "symfony/dependency-injection": "^5.1",
